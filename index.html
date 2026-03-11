@@ -986,7 +986,7 @@ td.var-adv { color: var(--red); }
     </div>
     <div class="cover-meta ani">
       <div class="cover-meta-item">Period: <span>Month ended 28 February 2026</span></div><!-- UPDATE: Change period month -->
-      <div class="cover-meta-item">FY: <span>1 Jan 2026 to 31 Dec 2026</span></div>
+      <div class="cover-meta-item">Reporting Date: <span>1 Jan 2026 to 31 Dec 2026</span></div>
       <div class="cover-meta-item">Prepared: <span>11 March 2026</span></div>
       <div class="cover-meta-item">By: <span>Antlab Ltd</span></div>
     </div>
@@ -1162,27 +1162,46 @@ td.var-adv { color: var(--red); }
         </div>
       </div>
 
+      <!-- Callaghan R&D Grant Claim Tracker -->
       <div class="dash-gate">
         <div class="dash-gate-header">
           <div>
-            <div class="dash-gate-tag" style="color:var(--indigo);">Gate 2: MVP Complete</div>
-            <div class="dash-gate-target">Target: Dec 2026 (Month 12)</div>
-            <div class="dash-gate-desc">Full MVP ready, market entry Sep/Oct</div>
+            <div class="dash-gate-tag" style="color:var(--green);">Callaghan R&D Grant Claim</div>
+            <div class="dash-gate-target">40% reimbursement of eligible R&D expenditure</div>
+            <div class="dash-gate-desc">Remaining 60% funded by investors (BVNZ)</div>
           </div>
           <div style="text-align:right;">
-            <!-- DATA: Update cash-to-gate figures monthly -->
-            <div class="dash-gate-amount" style="color:var(--indigo);">$916K</div>
-            <div class="dash-gate-amount-sub">remaining at gate</div>
+            <div class="dash-gate-amount" style="color:var(--green);">$89,664</div>
+            <div class="dash-gate-amount-sub">expected reimbursement</div>
           </div>
         </div>
         <div class="dash-gate-bar">
-          <!-- DATA: Progress = months elapsed / months to gate. Currently 2/12 = 17% -->
-          <div class="dash-gate-bar-fill" style="width:17%; background:linear-gradient(90deg,#2563eb,#60a5fa);"></div>
+          <!-- DATA: Progress = claimable / total grant. $89,664 / $400,000 = 22% -->
+          <div class="dash-gate-bar-fill" style="width:22%; background:linear-gradient(90deg,#10b981,#34d399);"></div>
         </div>
         <div class="dash-gate-footer">
-          <span>2 of 12 months elapsed</span>
-          <span style="color:var(--indigo); font-weight:600;">On track</span>
+          <span>$89,664 of $400,000 grant utilised</span>
+          <span style="color:var(--text-dim);">Eligible spend: $224,159</span>
         </div>
+      </div>
+    </div>
+
+    <!-- YTD and Feb Results -->
+    <div style="display:flex; gap:14px; margin-bottom:24px;" class="ani">
+      <div style="flex:1; background:#fff; border-radius:10px; padding:18px 20px; border-left:3px solid var(--red); box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);">
+        <div style="font-size:11px; color:var(--text-faint); font-weight:500; margin-bottom:6px;">YTD Net Result</div>
+        <div style="font-family:var(--mono); font-size:22px; font-weight:600; color:var(--red);">($249,818)</div>
+        <div style="font-size:10px; color:var(--text-faint); margin-top:4px;">Jan - Feb 2026</div>
+      </div>
+      <div style="flex:1; background:#fff; border-radius:10px; padding:18px 20px; border-left:3px solid var(--indigo); box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);">
+        <div style="font-size:11px; color:var(--text-faint); font-weight:500; margin-bottom:6px;">YTD Total Expenses</div>
+        <div style="font-family:var(--mono); font-size:22px; font-weight:600; color:var(--text);">$249,818</div>
+        <div style="font-size:10px; color:var(--text-faint); margin-top:4px;">Of which $224,159 funded</div>
+      </div>
+      <div style="flex:1; background:#fff; border-radius:10px; padding:18px 20px; border-left:3px solid var(--amber); box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);">
+        <div style="font-size:11px; color:var(--text-faint); font-weight:500; margin-bottom:6px;">Feb Budget Variance</div>
+        <div style="font-family:var(--mono); font-size:22px; font-weight:600; color:var(--red);">$182,415</div>
+        <div style="font-size:10px; color:var(--text-faint); margin-top:4px;">Over budget ($67,403 budgeted)</div>
       </div>
     </div>
 
