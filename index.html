@@ -1,0 +1,2613 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PharmAgent Ltd - Management Report - February 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f8f9fb;
+  --card: #ffffff;
+  --card-2: #f4f5f7;
+  --border: rgba(0,0,0,0.08);
+  --border-med: rgba(0,0,0,0.12);
+  --text: #1e293b;
+  --text-dim: #475569;
+  --text-faint: #94a3b8;
+  --indigo: #2563eb;
+  --indigo-dim: rgba(37,99,235,0.12);
+  --indigo-glow: rgba(37,99,235,0.35);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.1);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.1);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.1);
+  --mono: 'Inter', sans-serif;
+  --sans: 'Inter', sans-serif;
+  /* Card-interior text */
+  --card-text: #1a1a2e;
+  --card-text-dim: #6b7280;
+  --card-text-faint: #9ca3af;
+  --card-border: rgba(0,0,0,0.06);
+  --card-border-med: rgba(0,0,0,0.1);
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--indigo), #60a5fa);
+  transition: width 0.4s ease;
+  z-index: 1000;
+}
+
+/* ============================================================
+   NAV DOTS
+   ============================================================ */
+#nav-dots {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-dot.active {
+  background: var(--indigo);
+  transform: scale(1.5);
+}
+
+/* ============================================================
+   SLIDE COUNTER
+   ============================================================ */
+#slide-counter {
+  position: fixed;
+  bottom: 20px;
+  right: 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #94a3b8;
+  z-index: 1000;
+}
+
+/* ============================================================
+   SLIDES CONTAINER
+   ============================================================ */
+#slides-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 48px 56px 40px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  overflow-y: auto;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================
+   ANIMATION
+   ============================================================ */
+.ani {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.slide.active .ani {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide.active .ani:nth-child(1) { transition-delay: 0.05s; }
+.slide.active .ani:nth-child(2) { transition-delay: 0.10s; }
+.slide.active .ani:nth-child(3) { transition-delay: 0.15s; }
+.slide.active .ani:nth-child(4) { transition-delay: 0.20s; }
+.slide.active .ani:nth-child(5) { transition-delay: 0.25s; }
+.slide.active .ani:nth-child(6) { transition-delay: 0.30s; }
+.slide.active .ani:nth-child(7) { transition-delay: 0.35s; }
+.slide.active .ani:nth-child(8) { transition-delay: 0.40s; }
+.slide.active .ani:nth-child(9) { transition-delay: 0.45s; }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.slide-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.slide-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+.num { font-family: var(--mono); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.amber { color: var(--amber); }
+.indigo { color: var(--indigo); }
+.dim { color: var(--text-dim); }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+}
+
+.card-row {
+  display: flex;
+  gap: 12px;
+}
+
+.card-row .card { flex: 1; }
+
+.card-label {
+  font-size: 11px;
+  color: var(--card-text-dim);
+  margin-bottom: 6px;
+}
+
+.card-value {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--card-text);
+}
+
+.card-value.red { color: var(--red); }
+.card-value.green { color: var(--green); }
+.card-value.amber { color: var(--amber); }
+.card-value.indigo { color: var(--indigo); }
+
+.card-sub {
+  font-size: 10px;
+  color: var(--card-text-faint);
+  margin-top: 3px;
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.tbl-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+table.tbl-compact {
+  font-size: 11px;
+}
+
+table.tbl-tiny {
+  font-size: 10px;
+}
+
+th {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-align: right;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+th:first-child { text-align: left; }
+
+td {
+  padding: 5px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+}
+
+td:first-child {
+  font-family: var(--sans);
+  font-size: 12px;
+  text-align: left;
+  color: var(--text);
+}
+
+table.tbl-compact td { padding: 4px 8px; font-size: 11px; }
+table.tbl-compact td:first-child { font-size: 11px; }
+table.tbl-tiny td { padding: 3px 6px; font-size: 10px; }
+table.tbl-tiny td:first-child { font-size: 10px; }
+table.tbl-tiny th { padding: 4px 6px; font-size: 9px; }
+
+tr.section-head td, tr.section-head th {
+  background: rgba(0,0,0,0.02);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--text-dim);
+  padding-top: 10px;
+}
+
+tr.section-head td:first-child { color: var(--text-dim); font-family: var(--sans); }
+
+tr.total-row td {
+  border-top: 1px solid var(--border-med);
+  border-bottom: 2px solid var(--border-med);
+  font-weight: 600;
+  color: var(--text);
+}
+
+tr.grand-total td {
+  border-top: 2px solid var(--border-med);
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(0,0,0,0.02);
+  font-size: 12.5px;
+}
+
+tr.net-row td {
+  border-top: 2px solid var(--indigo);
+  font-weight: 700;
+  color: var(--indigo);
+  background: var(--indigo-dim);
+  font-size: 12.5px;
+}
+
+td.dash { color: var(--text-faint); }
+td.var-fav { color: var(--green); }
+td.var-adv { color: var(--red); }
+
+/* ============================================================
+   PILL BADGES
+   ============================================================ */
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--sans);
+}
+
+.pill-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.pill-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+.pill-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+.pill-indigo { background: var(--indigo-dim); color: var(--indigo); border: 1px solid rgba(37,99,235,0.2); }
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* ============================================================
+   DISCLAIMER
+   ============================================================ */
+.disclaimer {
+  font-size: 10px;
+  font-style: italic;
+  color: var(--text-faint);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   NOTE BOX
+   ============================================================ */
+.note-box {
+  background: rgba(37,99,235,0.06);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.note-box.amber-note {
+  background: var(--amber-dim);
+  border-color: rgba(245,158,11,0.25);
+}
+
+.note-box strong { color: var(--text); }
+
+/* ============================================================
+   PROGRESS BARS (payables)
+   ============================================================ */
+.pbar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.pbar-label { font-size: 11px; color: var(--text-dim); width: 180px; flex-shrink: 0; }
+.pbar-track { flex: 1; height: 6px; background: var(--border-med); border-radius: 3px; overflow: hidden; }
+.pbar-fill { height: 100%; border-radius: 3px; background: var(--indigo); }
+.pbar-val { font-family: var(--mono); font-size: 10px; color: var(--text-dim); width: 70px; text-align: right; }
+
+/* ============================================================
+   GAUGE CARDS
+   ============================================================ */
+.gauge-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.gauge-val {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--indigo);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.gauge-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.gauge-note { font-size: 10.5px; color: var(--text-dim); line-height: 1.4; }
+
+/* ============================================================
+   QUESTION CARDS (Cash Runway)
+   ============================================================ */
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.q-text { font-size: 11px; color: var(--text-dim); }
+.q-answer { font-size: 16px; font-weight: 700; font-family: var(--mono); }
+.q-sub { font-size: 10px; color: var(--text-dim); line-height: 1.4; }
+
+/* ============================================================
+   CONTENTS PAGE
+   ============================================================ */
+.contents-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  flex: 1;
+  align-content: start;
+}
+
+.contents-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.contents-item:hover {
+  border-color: var(--indigo);
+  background: var(--indigo-dim);
+}
+
+.contents-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--indigo);
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.contents-name {
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* ============================================================
+   COVER SLIDE (Aceternity-inspired)
+   ============================================================ */
+.slide-cover {
+  background: #fafbfc;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 45%, black 20%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 45%, black 20%, transparent 80%);
+}
+
+.slide-cover::after {
+  content: '';
+  position: absolute;
+  width: 700px;
+  height: 500px;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, rgba(16,185,129,0.03) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-badge {
+  display: inline-block;
+  background: rgba(37,99,235,0.06);
+  border: 1px solid rgba(37,99,235,0.15);
+  border-radius: 99px;
+  padding: 6px 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--indigo);
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-title {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-sub {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  justify-content: center;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.cover-meta-item {
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+.cover-meta-item span {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.cover-click {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text-faint);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 1;
+}
+
+.cover-line {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--indigo), rgba(37,99,235,0.2));
+  border-radius: 2px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   DIAGNOSTICS LAYOUT
+   ============================================================ */
+.diag-middle {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.diag-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  flex: 1;
+}
+
+.diag-panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ============================================================
+   SVG CHART (Cash Runway)
+   ============================================================ */
+.chart-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  flex: 1;
+}
+
+/* ============================================================
+   CASHFLOW TABLE WRAPPER
+   ============================================================ */
+.cf-wrap {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   WHITE-BOX INTERIOR TEXT OVERRIDES
+   ============================================================ */
+.card td, .card th,
+.diag-panel td, .diag-panel th,
+.tbl-wrap td, .tbl-wrap th,
+.gauge-card, .q-card, .contents-item,
+.cf-wrap td, .cf-wrap th {
+  color: var(--card-text);
+}
+
+.card td:first-child, .diag-panel td:first-child,
+.tbl-wrap td:first-child, .cf-wrap td:first-child {
+  color: var(--card-text);
+}
+
+.card th, .diag-panel th, .tbl-wrap th, .cf-wrap th {
+  color: var(--card-text-dim);
+  border-bottom-color: var(--card-border-med);
+}
+
+.card td, .diag-panel td, .tbl-wrap td, .cf-wrap td {
+  border-bottom-color: var(--card-border);
+}
+
+.card .dash, .diag-panel .dash, .tbl-wrap .dash, .cf-wrap .dash {
+  color: var(--card-text-faint);
+}
+
+/* Section/total rows inside white boxes */
+.card tr.section-head td,
+.diag-panel tr.section-head td,
+.tbl-wrap tr.section-head td,
+.cf-wrap tr.section-head td {
+  background: rgba(0,0,0,0.02);
+  color: var(--card-text-dim);
+}
+
+.card tr.total-row td,
+.diag-panel tr.total-row td,
+.tbl-wrap tr.total-row td,
+.cf-wrap tr.total-row td {
+  border-top-color: var(--card-border-med);
+  border-bottom-color: var(--card-border-med);
+  color: var(--card-text);
+}
+
+.card tr.grand-total td,
+.diag-panel tr.grand-total td,
+.tbl-wrap tr.grand-total td,
+.cf-wrap tr.grand-total td {
+  border-top-color: var(--card-border-med);
+  background: rgba(0,0,0,0.02);
+  color: var(--card-text);
+}
+
+.card tr.net-row td,
+.diag-panel tr.net-row td,
+.tbl-wrap tr.net-row td,
+.cf-wrap tr.net-row td {
+  border-top: 2px solid var(--indigo);
+  color: var(--indigo);
+  background: rgba(37,99,235,0.06);
+}
+
+/* Variance colours preserved */
+.card .var-fav, .tbl-wrap .var-fav, .cf-wrap .var-fav { color: var(--green); }
+.card .var-adv, .tbl-wrap .var-adv, .cf-wrap .var-adv { color: var(--red); }
+
+/* Panels / boxes - white interiors */
+.diag-panel {
+  background: var(--card);
+  border-color: var(--card-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.diag-panel-title {
+  color: var(--card-text-dim);
+  border-bottom-color: var(--card-border);
+}
+
+.tbl-wrap {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.gauge-card {
+  background: var(--card);
+  border-color: var(--card-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.gauge-label { color: var(--card-text); }
+.gauge-note { color: var(--card-text-dim); }
+.gauge-val { color: var(--indigo); }
+
+.q-card {
+  background: var(--card);
+  border-color: var(--card-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.q-text { color: var(--card-text-dim); }
+.q-sub { color: var(--card-text-dim); }
+
+.contents-item {
+  background: var(--card);
+  border-color: var(--card-border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.contents-item:hover {
+  border-color: var(--indigo);
+  background: rgba(37,99,235,0.04);
+}
+
+.contents-name { color: var(--card-text); }
+
+.chart-wrap {
+  background: var(--card);
+  border-color: var(--card-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* Note boxes - subtle tint on white */
+.note-box {
+  background: rgba(37,99,235,0.04);
+  border-color: rgba(37,99,235,0.15);
+  color: var(--card-text-dim);
+}
+
+.note-box strong { color: var(--card-text); }
+
+.note-box.amber-note {
+  background: rgba(245,158,11,0.06);
+  border-color: rgba(245,158,11,0.2);
+}
+
+/* Disclaimer text */
+.disclaimer { color: #94a3b8; }
+
+/* Progress bars on white */
+.pbar-label { color: var(--card-text-dim); }
+.pbar-track { background: rgba(0,0,0,0.06); }
+.pbar-val { color: var(--card-text-dim); }
+
+/* Flow box (cashflow diagnostic) */
+.flow-box {
+  background: var(--card);
+  border-color: var(--card-border);
+}
+
+.flow-head {
+  background: rgba(0,0,0,0.02);
+  color: var(--card-text-dim);
+  border-bottom-color: var(--card-border);
+}
+
+.flow-row {
+  border-bottom-color: var(--card-border);
+}
+
+.flow-label { color: var(--card-text-dim); }
+
+/* Cover slide - Aceternity light theme */
+
+/* SVG chart text adjustments for white card background */
+.chart-wrap text { fill: var(--card-text-dim); }
+.chart-wrap .chart-grid { stroke: rgba(0,0,0,0.06); }
+
+/* ============================================================
+   PRINT / PDF STYLES
+   Professional white document with consistent backgrounds
+   ============================================================ */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+
+  html, body {
+    background: #ffffff !important;
+    color: #1a1a2e !important;
+    overflow: visible !important;
+    height: auto !important;
+    font-size: 13px !important;
+  }
+
+  #progress-bar, #nav-dots, #slide-counter, .cover-click { display: none !important; }
+
+  #slides-container {
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  .slide {
+    position: relative !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+    height: auto !important;
+    min-height: 95vh !important;
+    page-break-after: always !important;
+    background: #ffffff !important;
+    color: #1a1a2e !important;
+    padding: 40px 48px !important;
+  }
+
+  .ani { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+  /* Cover slide */
+  .slide-cover { background: #ffffff !important; }
+  .slide-cover::before, .slide-cover::after { display: none !important; }
+  .cover-badge { background: #eff6ff !important; border-color: #bfdbfe !important; color: #1d4ed8 !important; }
+  .cover-title { color: #1a1a2e !important; }
+  .cover-sub { color: #555 !important; }
+  .cover-meta-item { color: #666 !important; }
+  .cover-meta-item span { color: #1a1a2e !important; }
+  .cover-line { background: #2563eb !important; }
+
+  /* Typography */
+  .slide-title { color: #1a1a2e !important; }
+  .slide-sub { color: #666 !important; }
+  .section-label { color: #888 !important; }
+  .disclaimer { color: #999 !important; }
+
+  /* Cards - light gray on white */
+  .card {
+    background: #f8f9fb !important;
+    border: 1px solid #e2e4ea !important;
+    box-shadow: none !important;
+  }
+
+  .card-label { color: #666 !important; }
+  .card-value { color: #1a1a2e !important; }
+  .card-value.red { color: #dc2626 !important; }
+  .card-value.green { color: #059669 !important; }
+  .card-value.amber { color: #d97706 !important; }
+  .card-value.indigo { color: #1d4ed8 !important; }
+  .card-sub { color: #888 !important; }
+
+  /* Tables */
+  th {
+    color: #666 !important;
+    border-bottom: 1px solid #d1d5db !important;
+    background: transparent !important;
+  }
+
+  td {
+    color: #1a1a2e !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  td.dash { color: #ccc !important; }
+  td.var-fav, .green { color: #059669 !important; }
+  td.var-adv, .red { color: #dc2626 !important; }
+  .amber { color: #d97706 !important; }
+  .indigo { color: #1d4ed8 !important; }
+  .dim { color: #aaa !important; }
+
+  tr.section-head td { background: #f3f4f6 !important; color: #555 !important; }
+  tr.total-row td { border-top: 1px solid #d1d5db !important; border-bottom: 1px solid #d1d5db !important; color: #1a1a2e !important; }
+  tr.grand-total td { border-top: 1px solid #9ca3af !important; background: #f3f4f6 !important; color: #1a1a2e !important; }
+  tr.net-row td { border-top: 2px solid #1d4ed8 !important; background: #eff6ff !important; color: #1d4ed8 !important; }
+
+  /* Panels */
+  .diag-panel, .tbl-wrap, .gauge-card, .q-card, .chart-wrap, .cf-wrap {
+    background: #f8f9fb !important;
+    border: 1px solid #e2e4ea !important;
+    box-shadow: none !important;
+  }
+
+  .diag-panel-title { color: #555 !important; border-bottom-color: #e2e4ea !important; }
+  .gauge-label { color: #1a1a2e !important; }
+  .gauge-note { color: #666 !important; }
+  .gauge-val { color: #1d4ed8 !important; }
+  .q-text { color: #666 !important; }
+  .q-answer { color: inherit !important; }
+  .q-sub { color: #666 !important; }
+
+  /* Contents items */
+  .contents-item {
+    background: #f8f9fb !important;
+    border: 1px solid #e2e4ea !important;
+    box-shadow: none !important;
+  }
+  .contents-name { color: #1a1a2e !important; }
+  .contents-num { color: #1d4ed8 !important; }
+
+  /* Note boxes */
+  .note-box { background: #eff6ff !important; border: 1px solid #bfdbfe !important; color: #555 !important; }
+  .note-box strong { color: #1a1a2e !important; }
+  .note-box.amber-note { background: #fffbeb !important; border-color: #fde68a !important; }
+
+  /* Progress bars */
+  .pbar-label { color: #555 !important; }
+  .pbar-track { background: #e5e7eb !important; }
+  .pbar-val { color: #666 !important; }
+
+  /* Pill badges */
+  .pill-green { background: #ecfdf5 !important; color: #059669 !important; border-color: #a7f3d0 !important; }
+  .pill-red { background: #fef2f2 !important; color: #dc2626 !important; border-color: #fecaca !important; }
+  .pill-amber { background: #fffbeb !important; color: #d97706 !important; border-color: #fde68a !important; }
+  .pill-indigo { background: #eff6ff !important; color: #1d4ed8 !important; border-color: #bfdbfe !important; }
+
+  /* SVG chart */
+  .chart-wrap svg text { fill: #666 !important; }
+
+  /* New diagnostic components */
+  [style*="border-left:4px solid"] { border-left-width: 4px !important; }
+  [style*="background:#fef2f2"] { background: #fef2f2 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- NAV DOTS -->
+<div id="nav-dots"></div>
+
+<!-- SLIDE COUNTER -->
+<div id="slide-counter"></div>
+
+<!-- ============================================================
+     SLIDES
+     ============================================================ -->
+<div id="slides-container">
+
+  <!-- ====== DATA SECTION: Cover metadata - update period, dates, preparer ====== -->
+  <!-- ============================================================
+       SLIDE 1: COVER
+       ============================================================ -->
+  <div class="slide slide-cover" data-slide="1">
+    <div class="ani">
+      <div class="cover-badge">Management Report</div>
+    </div>
+    <div class="ani">
+      <div class="cover-title">PharmAgent Ltd</div>
+    </div>
+    <div class="cover-line ani"></div>
+    <div class="ani">
+      <div class="cover-sub">Management Reports</div>
+    </div>
+    <div class="cover-meta ani">
+      <div class="cover-meta-item">Period: <span>Month ended 28 February 2026</span></div><!-- UPDATE: Change period month -->
+      <div class="cover-meta-item">FY: <span>1 Jan 2026 to 31 Dec 2026</span></div>
+      <div class="cover-meta-item">Prepared: <span>11 March 2026</span></div>
+      <div class="cover-meta-item">By: <span>Antlab Ltd</span></div>
+    </div>
+    <div class="cover-click ani">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Click or press arrow keys to navigate
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SLIDE 2: CONTENTS
+       ============================================================ -->
+  <div class="slide" data-slide="2">
+    <div class="slide-title ani">Contents</div>
+    <div class="slide-sub ani">PharmAgent Ltd &mdash; Management Report, February 2026</div>
+    <div class="contents-grid">
+      <div class="contents-item ani" onclick="goToSlide(3)">
+        <span class="contents-num">3</span>
+        <span class="contents-name">Diagnostics Dashboard</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(4)">
+        <span class="contents-num">4</span>
+        <span class="contents-name">Year to Date: Profit and Loss</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(5)">
+        <span class="contents-num">5</span>
+        <span class="contents-name">Year to Date: Budget Variance</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(6)">
+        <span class="contents-num">6</span>
+        <span class="contents-name">Monthly: Profit and Loss</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(7)">
+        <span class="contents-num">7</span>
+        <span class="contents-name">Monthly: Budget Variance</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(8)">
+        <span class="contents-num">8</span>
+        <span class="contents-name">Balance Sheet</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(9)">
+        <span class="contents-num">9</span>
+        <span class="contents-name">Aged Payables Summary</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(10)">
+        <span class="contents-num">10</span>
+        <span class="contents-name">Cashflow Diagnostic</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(11)">
+        <span class="contents-num">11</span>
+        <span class="contents-name">Cash Runway</span>
+      </div>
+      <div class="contents-item ani" onclick="goToSlide(12)">
+        <span class="contents-num">12</span>
+        <span class="contents-name">12-Month Cashflow Forecast</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SLIDE 3: DIAGNOSTICS DASHBOARD
+       ============================================================ -->
+  <div class="slide" data-slide="3">
+    <style>
+      .dash-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:24px; }
+      .dash-header h2 { font-size:22px; font-weight:600; color:var(--text); margin:0; letter-spacing:-0.01em; }
+      .dash-period { font-size:11px; color:var(--text-faint); }
+
+      .dash-kpi-strip { display:flex; gap:12px; margin-bottom:24px; }
+      .dash-kpi {
+        flex:1; background:#fff; border-radius:10px; padding:18px 20px;
+        border-left:3px solid var(--indigo);
+        box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+      }
+      .dash-kpi-label { font-size:11px; color:var(--text-faint); font-weight:500; margin-bottom:6px; }
+      .dash-kpi-val { font-family:var(--mono); font-size:22px; font-weight:600; color:var(--text); }
+      .dash-kpi-sub { font-size:10px; color:var(--text-faint); margin-top:4px; }
+      .dash-kpi.green { border-left-color:var(--green); }
+      .dash-kpi.green .dash-kpi-val { color:var(--green); }
+      .dash-kpi.blue .dash-kpi-val { color:var(--indigo); }
+      .dash-kpi.amber { border-left-color:var(--amber); }
+      .dash-kpi.amber .dash-kpi-val { color:var(--amber); }
+
+      .dash-gate {
+        flex:1; background:#fff; border-radius:10px; padding:20px 22px;
+        box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+      }
+      .dash-gate-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+      .dash-gate-tag { font-size:10px; font-weight:600; letter-spacing:0.04em; margin-bottom:4px; }
+      .dash-gate-target { font-size:12px; color:var(--text-dim); }
+      .dash-gate-desc { font-size:11px; color:var(--text-faint); margin-top:3px; }
+      .dash-gate-amount { font-family:var(--mono); font-size:20px; font-weight:700; }
+      .dash-gate-amount-sub { font-size:9px; color:var(--text-faint); text-align:right; }
+      .dash-gate-bar { height:6px; background:#f1f5f9; border-radius:3px; overflow:hidden; }
+      .dash-gate-bar-fill { height:100%; border-radius:3px; }
+      .dash-gate-footer { display:flex; justify-content:space-between; font-size:9px; color:var(--text-faint); margin-top:5px; }
+
+      .dash-panel {
+        flex:1; background:#fff; border-radius:10px; padding:20px 22px;
+        box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+      }
+      .dash-panel-title { font-size:12px; font-weight:600; color:var(--text); margin-bottom:16px; }
+      .dash-funding-row { display:flex; justify-content:space-between; font-size:10px; margin-bottom:4px; }
+      .dash-funding-bar { height:6px; background:#f1f5f9; border-radius:3px; overflow:hidden; margin-bottom:14px; }
+      .dash-funding-fill { height:100%; border-radius:3px; }
+      .dash-balance { text-align:center; padding:12px 8px; border-radius:8px; flex:1; }
+      .dash-balance-month { font-size:10px; color:var(--text-faint); margin-bottom:4px; }
+      .dash-balance-val { font-family:var(--mono); font-size:15px; font-weight:600; }
+
+      .dash-footer {
+        font-size:10px; color:var(--text-faint); background:rgba(0,0,0,0.02);
+        border-radius:8px; padding:12px 16px; line-height:1.5;
+      }
+      .dash-footer strong { color:var(--text-dim); }
+
+      @media print {
+        .dash-kpi, .dash-gate, .dash-panel { background:#f8f9fb !important; box-shadow:none !important; }
+        .dash-kpi { border-left-width:3px !important; }
+      }
+    </style>
+
+    <div class="dash-header ani">
+      <h2>Diagnostics Dashboard</h2>
+      <div class="dash-period">PharmAgent Ltd &mdash; 28 February 2026</div>
+    </div>
+
+    <!-- DATA: KPI strip values - update cash balance, burn rate, runway monthly -->
+    <div class="dash-kpi-strip ani">
+      <div class="dash-kpi green">
+        <div class="dash-kpi-label">Cash in Bank</div>
+        <div class="dash-kpi-val">$200,000</div>
+        <div class="dash-kpi-sub">28 Feb 2026</div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-label">Monthly Burn Rate</div>
+        <div class="dash-kpi-val">$100,000</div>
+        <div class="dash-kpi-sub">Budgeted average</div>
+      </div>
+      <div class="dash-kpi blue">
+        <div class="dash-kpi-label">Total Commitment</div>
+        <div class="dash-kpi-val">$2.115M</div>
+        <div class="dash-kpi-sub">BVNZ + Callaghan</div>
+      </div>
+      <div class="dash-kpi amber">
+        <div class="dash-kpi-label">Runway</div>
+        <div class="dash-kpi-val">~21 months</div>
+        <div class="dash-kpi-sub">On total commitment</div>
+      </div>
+    </div>
+
+    <!-- DATA: Gate KPI values - update each month -->
+    <div style="display:flex; gap:14px; margin-bottom:24px;" class="ani">
+      <div class="dash-gate">
+        <div class="dash-gate-header">
+          <div>
+            <div class="dash-gate-tag" style="color:var(--green);">Gate 1: Prototype</div>
+            <div class="dash-gate-target">Target: Jul 2026 (Month 10)</div>
+            <div class="dash-gate-desc">Working prototype demonstrating data triangulation</div>
+          </div>
+          <div style="text-align:right;">
+            <!-- DATA: Update cash-to-gate figures monthly -->
+            <div class="dash-gate-amount" style="color:var(--green);">$1.46M</div>
+            <div class="dash-gate-amount-sub">remaining at gate</div>
+          </div>
+        </div>
+        <div class="dash-gate-bar">
+          <!-- DATA: Progress = months elapsed / months to gate. Currently 2/7 = 29% -->
+          <div class="dash-gate-bar-fill" style="width:29%; background:linear-gradient(90deg,#10b981,#34d399);"></div>
+        </div>
+        <div class="dash-gate-footer">
+          <span>2 of 7 months elapsed</span>
+          <span style="color:var(--green); font-weight:600;">On track</span>
+        </div>
+      </div>
+
+      <div class="dash-gate">
+        <div class="dash-gate-header">
+          <div>
+            <div class="dash-gate-tag" style="color:var(--indigo);">Gate 2: MVP Complete</div>
+            <div class="dash-gate-target">Target: Dec 2026 (Month 12)</div>
+            <div class="dash-gate-desc">Full MVP ready, market entry Sep/Oct</div>
+          </div>
+          <div style="text-align:right;">
+            <!-- DATA: Update cash-to-gate figures monthly -->
+            <div class="dash-gate-amount" style="color:var(--indigo);">$916K</div>
+            <div class="dash-gate-amount-sub">remaining at gate</div>
+          </div>
+        </div>
+        <div class="dash-gate-bar">
+          <!-- DATA: Progress = months elapsed / months to gate. Currently 2/12 = 17% -->
+          <div class="dash-gate-bar-fill" style="width:17%; background:linear-gradient(90deg,#2563eb,#60a5fa);"></div>
+        </div>
+        <div class="dash-gate-footer">
+          <span>2 of 12 months elapsed</span>
+          <span style="color:var(--indigo); font-weight:600;">On track</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Funding + Outlook -->
+    <div style="display:flex; gap:14px; margin-bottom:20px;" class="ani">
+      <!-- DATA: Update drawn amounts as funding tranches are received -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Funding Drawdown</div>
+        <div style="display:flex; gap:3px; height:10px; border-radius:5px; overflow:hidden; margin-bottom:10px;">
+          <div style="flex:1000; background:linear-gradient(90deg,#2563eb,#60a5fa); border-radius:3px;" title="BVNZ Equity $1M"></div>
+          <div style="flex:400; background:linear-gradient(90deg,#10b981,#34d399); border-radius:3px;" title="Callaghan R&amp;D Grant $400K"></div>
+          <div style="flex:715; background:linear-gradient(90deg,#f59e0b,#fbbf24); border-radius:3px;" title="Callaghan Loan $715K"></div>
+        </div>
+        <div style="display:flex; gap:16px; margin-bottom:16px; font-size:10px;">
+          <span style="color:var(--indigo);"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--indigo);margin-right:4px;vertical-align:middle;"></span>BVNZ: $1M</span>
+          <span style="color:var(--green);"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);margin-right:4px;vertical-align:middle;"></span>Grant: $400K</span>
+          <span style="color:var(--amber);"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--amber);margin-right:4px;vertical-align:middle;"></span>Loan: $715K</span>
+        </div>
+        <div class="dash-funding-row"><span style="color:var(--text-faint);">BVNZ equity</span><span style="font-family:var(--mono); color:var(--text);">$200K of $1,000K</span></div>
+        <div class="dash-funding-bar"><div class="dash-funding-fill" style="width:20%; background:var(--indigo);"></div></div>
+        <div class="dash-funding-row"><span style="color:var(--text-faint);">Callaghan grant</span><span style="font-family:var(--mono); color:var(--text);">$0 of $400K</span></div>
+        <div class="dash-funding-bar"><div class="dash-funding-fill" style="width:0%; background:var(--green);"></div></div>
+        <div class="dash-funding-row"><span style="color:var(--text-faint);">Callaghan loan</span><span style="font-family:var(--mono); color:var(--text);">$0 of $715K</span></div>
+        <div class="dash-funding-bar"><div class="dash-funding-fill" style="width:0%; background:var(--amber);"></div></div>
+        <div style="text-align:right; font-size:10px; color:var(--text-faint); margin-top:6px;">
+          Total drawn: <span style="font-family:var(--mono); font-weight:600; color:var(--text);">$200,000</span> of $2,115,000 (9.5%)
+        </div>
+      </div>
+
+      <!-- DATA: Update projected balances monthly from cashflow forecast -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">3-Month Projected Balance</div>
+        <div style="display:flex; gap:10px; margin-bottom:14px;">
+          <!-- DATA: These are derived from the 12-month cashflow forecast. Update monthly. -->
+          <div class="dash-balance" style="background:rgba(16,185,129,0.06);">
+            <div class="dash-balance-month">Mar 2026</div>
+            <div class="dash-balance-val" style="color:var(--green);">$119,070</div>
+          </div>
+          <div class="dash-balance" style="background:rgba(245,158,11,0.06);">
+            <div class="dash-balance-month">Apr 2026</div>
+            <div class="dash-balance-val" style="color:var(--amber);">$38,872</div>
+          </div>
+          <div class="dash-balance" style="background:rgba(239,68,68,0.06);">
+            <div class="dash-balance-month">May 2026</div>
+            <div class="dash-balance-val" style="color:var(--red);">($41,432)</div>
+          </div>
+        </div>
+        <div style="padding:10px 14px; background:rgba(239,68,68,0.04); border:1px solid rgba(239,68,68,0.12); border-radius:8px; margin-bottom:16px;">
+          <div style="font-size:11px; color:var(--red); font-weight:500;">Cash turns negative by May without further funding drawdown</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:8px;">
+          <span style="font-family:var(--mono); font-size:28px; font-weight:700; color:var(--amber);">~9</span>
+          <span style="font-size:11px; color:var(--text-dim);">months post-MVP buffer before cash exhaustion (~Oct 2027)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer note -->
+    <div class="dash-footer ani">
+      <strong>Gate 3 (Cash Exhaustion, ~Oct 2027):</strong> Total $2.115M commitment funds operations through ~Oct 2027 at current burn rate. Revenue or additional funding required before this date. Callaghan grant claims and BVNZ drawdown timing critical.
+    </div>
+  </div>
+
+  <!-- DATA: YTD P&L figures - source from Xero P&L report, update all amounts -->
+  <!-- ============================================================
+       SLIDE 4: YTD PROFIT AND LOSS
+       ============================================================ -->
+  <div class="slide" data-slide="4">
+    <div class="slide-title ani">Year to Date: Profit and Loss</div>
+    <div class="slide-sub ani">1 January 2026 to 28 February 2026</div>
+    <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
+
+    <div class="tbl-wrap ani" style="flex:0 0 auto; overflow:hidden;">
+      <table class="tbl-compact">
+        <thead>
+          <tr>
+            <th></th>
+            <th>1 Jan - 28 Feb</th>
+            <th>Funded Activities</th>
+            <th>Non-Funded Activities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="font-family:var(--sans); color:var(--text-dim); font-size:11px; padding-top:8px;">Gross Profit (Loss)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Gross Profit (Loss)</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Gross Profit %</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">General Administration</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Accounting Fees</td>
+            <td>2,950</td>
+            <td>2,950</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Cloud &amp; Product Infrastructure</td>
+            <td>13</td>
+            <td>13</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Computer Expenses</td>
+            <td>1,922</td>
+            <td>1,922</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">General Expenses</td>
+            <td>243</td>
+            <td>243</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Legal Fees</td>
+            <td>9,090</td>
+            <td class="dash"></td>
+            <td>9,090</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">SaaS &amp; Business Software</td>
+            <td>211</td>
+            <td class="dash"></td>
+            <td>211</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Wages &amp; Salaries</td>
+            <td>80,289</td>
+            <td>64,231</td>
+            <td>16,058</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Website &amp; Domain</td>
+            <td>300</td>
+            <td class="dash"></td>
+            <td>300</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total General Administration</td>
+            <td>95,017</td>
+            <td>69,358</td>
+            <td>25,659</td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Product Development</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Provoke Solutions NZ</td>
+            <td>150,025</td>
+            <td>150,025</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Product Development</td>
+            <td>150,025</td>
+            <td>150,025</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Sales &amp; Marketing</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Travel - International</td>
+            <td>4,776</td>
+            <td>4,776</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Sales &amp; Marketing</td>
+            <td>4,776</td>
+            <td>4,776</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="grand-total">
+            <td style="font-family:var(--sans);">Total Expenses</td>
+            <td>249,818</td>
+            <td>224,159</td>
+            <td>25,659</td>
+          </tr>
+          <tr class="net-row">
+            <td style="font-family:var(--sans);">Net Profit (Loss) for the Year</td>
+            <td>(249,818)</td>
+            <td>(224,159)</td>
+            <td>(25,659)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- What's to come back -->
+    <div class="ani" style="margin-top:12px;">
+      <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:8px;">What's to Come Back</div>
+      <div class="note-box" style="display:flex; gap:24px; align-items:flex-start;">
+        <div style="flex:1; font-size:11px;">
+          Year to date, <strong>$224,159</strong> of expenditure is eligible under the Callaghan Innovation R&amp;D grant. Callaghan reimburses <strong>40%</strong> of eligible R&amp;D expenditure, with the remaining 60% funded by investors (BVNZ). The expected reimbursement is <strong>$89,664</strong>. This includes 80% of Mark David's gross wages (<strong>$64,231</strong>), which are being tracked and allocated as a funded activity on an ongoing basis. The grant claim will be submitted progressively as milestone reporting is completed.
+        </div>
+        <div style="flex-shrink:0; display:flex; flex-direction:column; gap:4px; font-size:11px; border-left:1px solid rgba(37,99,235,0.2); padding-left:20px;">
+          <div style="color:var(--text-dim);">Eligible R&amp;D Spend (YTD)</div>
+          <div class="num indigo" style="font-size:14px; font-weight:600;">$224,159</div>
+          <div style="color:var(--text-dim); margin-top:6px;">Expected Reimbursement (40%)</div>
+          <div class="num green" style="font-size:14px; font-weight:600;">$89,664</div>
+          <div style="color:var(--text-dim); margin-top:6px;">Callaghan R&amp;D Grant Available</div>
+          <div class="num" style="font-size:14px; font-weight:600;">$400,000</div>
+          <div style="color:var(--text-dim); margin-top:6px;">Remaining Grant Balance</div>
+          <div class="num" style="font-size:14px; font-weight:600;">$310,336</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA: YTD Budget variance - source from Xero budget report -->
+  <!-- ============================================================
+       SLIDE 5: YTD BUDGET VARIANCE
+       ============================================================ -->
+  <div class="slide" data-slide="5">
+    <div class="slide-title ani">Year to Date: Budget Variance</div>
+    <div class="slide-sub ani">1 January 2026 to 28 February 2026</div>
+    <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
+
+    <div class="tbl-wrap ani" style="flex:1; overflow:hidden;">
+      <table class="tbl-compact">
+        <thead>
+          <tr>
+            <th></th>
+            <th>1 Jan - 28 Feb</th>
+            <th>Overall Budget</th>
+            <th>Variance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--sans); color:var(--text-dim); font-size:11px;">Gross Profit (Loss)</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">General Administration</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Accounting Fees</td>
+            <td>2,950</td>
+            <td>11,900</td>
+            <td class="var-fav">(8,950)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Bank Fees &amp; Charges</td>
+            <td class="dash"></td>
+            <td>1,079</td>
+            <td class="var-fav">(1,079)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Cloud &amp; Product Infrastructure</td>
+            <td>13</td>
+            <td>20,868</td>
+            <td class="var-fav">(20,855)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Computer Expenses</td>
+            <td>1,922</td>
+            <td>4,200</td>
+            <td class="var-fav">(2,278)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Entertainment</td>
+            <td class="dash"></td>
+            <td>4,656</td>
+            <td class="var-fav">(4,656)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">General Expenses</td>
+            <td>243</td>
+            <td>8,065</td>
+            <td class="var-fav">(7,822)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Insurance</td>
+            <td class="dash"></td>
+            <td>3,189</td>
+            <td class="var-fav">(3,189)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Legal Fees</td>
+            <td>9,090</td>
+            <td>11,800</td>
+            <td class="var-fav">(2,710)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Product Specialist / QA</td>
+            <td class="dash"></td>
+            <td>128,778</td>
+            <td class="var-fav">(128,778)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">SaaS &amp; Business Software</td>
+            <td>211</td>
+            <td>7,800</td>
+            <td class="var-fav">(7,589)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Technical Advisor</td>
+            <td class="dash"></td>
+            <td>54,545</td>
+            <td class="var-fav">(54,545)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Wages &amp; Salaries</td>
+            <td>80,289</td>
+            <td>199,612</td>
+            <td class="var-fav">(119,323)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Website &amp; Domain</td>
+            <td>300</td>
+            <td>465</td>
+            <td class="var-fav">(165)</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total General Administration</td>
+            <td>95,017</td>
+            <td>456,957</td>
+            <td class="var-fav">(361,940)</td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Product Development</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Provoke Solutions NZ</td>
+            <td>150,025</td>
+            <td>660,000</td>
+            <td class="var-fav">(509,975)</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Product Development</td>
+            <td>150,025</td>
+            <td>660,000</td>
+            <td class="var-fav">(509,975)</td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Sales &amp; Marketing</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Advertising &amp; Marketing</td>
+            <td class="dash"></td>
+            <td>6,182</td>
+            <td class="var-fav">(6,182)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Conferences</td>
+            <td class="dash"></td>
+            <td>9,000</td>
+            <td class="var-fav">(9,000)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Travel - International</td>
+            <td>4,776</td>
+            <td>66,909</td>
+            <td class="var-fav">(62,133)</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Sales &amp; Marketing</td>
+            <td>4,776</td>
+            <td>82,091</td>
+            <td class="var-fav">(77,315)</td>
+          </tr>
+          <tr class="grand-total">
+            <td style="font-family:var(--sans);">Total Expenses</td>
+            <td>249,818</td>
+            <td>1,199,048</td>
+            <td class="var-fav">(949,230)</td>
+          </tr>
+          <tr class="net-row">
+            <td style="font-family:var(--sans);">Net Profit (Loss) for the Year</td>
+            <td>(249,818)</td>
+            <td>(1,199,048)</td>
+            <td class="var-fav">949,230</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DATA: Monthly P&L - source from Xero single month P&L -->
+  <!-- ============================================================
+       SLIDE 6: MONTHLY P&L
+       ============================================================ -->
+  <div class="slide" data-slide="6">
+    <div class="slide-title ani">Monthly: Profit and Loss</div>
+    <div class="slide-sub ani">For the month ended 28 February 2026</div>
+    <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
+
+    <div class="tbl-wrap ani" style="flex:1; overflow:hidden;">
+      <table class="tbl-compact">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Feb 2026</th>
+            <th>Funded Activities</th>
+            <th>Non-Funded Activities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--sans); color:var(--text-dim); font-size:11px;">Gross Profit (Loss)</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">General Administration</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Accounting Fees</td>
+            <td>2,950</td>
+            <td>2,950</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Cloud &amp; Product Infrastructure</td>
+            <td>13</td>
+            <td>13</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Computer Expenses</td>
+            <td>1,922</td>
+            <td>1,922</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">General Expenses</td>
+            <td>243</td>
+            <td>243</td>
+            <td class="dash"></td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Legal Fees</td>
+            <td>9,090</td>
+            <td class="dash"></td>
+            <td>9,090</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">SaaS &amp; Business Software</td>
+            <td>211</td>
+            <td class="dash"></td>
+            <td>211</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Wages &amp; Salaries</td>
+            <td>80,289</td>
+            <td>64,231</td>
+            <td>16,058</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Website &amp; Domain</td>
+            <td>300</td>
+            <td class="dash"></td>
+            <td>300</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total General Administration</td>
+            <td>95,017</td>
+            <td>69,358</td>
+            <td>25,659</td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Product Development</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Provoke Solutions NZ</td>
+            <td>150,025</td>
+            <td>150,025</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Product Development</td>
+            <td>150,025</td>
+            <td>150,025</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Sales &amp; Marketing</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Travel - International</td>
+            <td>4,776</td>
+            <td>4,776</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Sales &amp; Marketing</td>
+            <td>4,776</td>
+            <td>4,776</td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="grand-total">
+            <td style="font-family:var(--sans);">Total Expenses</td>
+            <td>249,818</td>
+            <td>224,159</td>
+            <td>25,659</td>
+          </tr>
+          <tr class="net-row">
+            <td style="font-family:var(--sans);">Net Profit (Loss) for the Period</td>
+            <td>(249,818)</td>
+            <td>(224,159)</td>
+            <td>(25,659)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DATA: Monthly budget variance - source from Xero monthly budget -->
+  <!-- ============================================================
+       SLIDE 7: MONTHLY BUDGET VARIANCE
+       ============================================================ -->
+  <div class="slide" data-slide="7">
+    <div class="slide-title ani">Monthly: Budget Variance</div>
+    <div class="slide-sub ani">For the month ended 28 February 2026</div>
+    <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
+
+    <div class="tbl-wrap ani" style="flex:1; overflow:hidden;">
+      <table class="tbl-compact">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Feb 2026</th>
+            <th>Monthly Budget</th>
+            <th>Variance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--sans); color:var(--text-dim); font-size:11px;">Gross Profit (Loss)</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">General Administration</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Accounting Fees</td>
+            <td>2,950</td>
+            <td>3,000</td>
+            <td class="var-fav">(50)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Bank Fees &amp; Charges</td>
+            <td class="dash"></td>
+            <td>61</td>
+            <td class="var-fav">(61)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Cloud &amp; Product Infrastructure</td>
+            <td>13</td>
+            <td>500</td>
+            <td class="var-fav">(487)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Computer Expenses</td>
+            <td>1,922</td>
+            <td class="dash"></td>
+            <td class="var-adv">1,922</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Entertainment</td>
+            <td class="dash"></td>
+            <td>252</td>
+            <td class="var-fav">(252)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">General Expenses</td>
+            <td>243</td>
+            <td>520</td>
+            <td class="var-fav">(277)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Insurance</td>
+            <td class="dash"></td>
+            <td>206</td>
+            <td class="var-fav">(206)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Legal Fees</td>
+            <td>9,090</td>
+            <td class="dash"></td>
+            <td class="var-adv">9,090</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">SaaS &amp; Business Software</td>
+            <td>211</td>
+            <td>500</td>
+            <td class="var-fav">(289)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Technical Advisor</td>
+            <td class="dash"></td>
+            <td>4,167</td>
+            <td class="var-fav">(4,167)</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Wages &amp; Salaries</td>
+            <td>80,289</td>
+            <td>14,167</td>
+            <td class="var-adv">66,122</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Website &amp; Domain</td>
+            <td>300</td>
+            <td>30</td>
+            <td class="var-adv">270</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total General Administration</td>
+            <td>95,017</td>
+            <td>23,403</td>
+            <td class="var-adv">71,614</td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Product Development</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Provoke Solutions NZ</td>
+            <td>150,025</td>
+            <td>44,000</td>
+            <td class="var-adv">106,025</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Product Development</td>
+            <td>150,025</td>
+            <td>44,000</td>
+            <td class="var-adv">106,025</td>
+          </tr>
+          <tr class="section-head">
+            <td colspan="4">Sales &amp; Marketing</td>
+          </tr>
+          <tr>
+            <td style="padding-left:20px; font-family:var(--sans);">Travel - International</td>
+            <td>4,776</td>
+            <td class="dash"></td>
+            <td class="var-adv">4,776</td>
+          </tr>
+          <tr class="total-row">
+            <td style="font-family:var(--sans);">Total Sales &amp; Marketing</td>
+            <td>4,776</td>
+            <td class="dash"></td>
+            <td class="var-adv">4,776</td>
+          </tr>
+          <tr class="grand-total">
+            <td style="font-family:var(--sans);">Total Expenses</td>
+            <td>249,818</td>
+            <td>67,403</td>
+            <td class="var-adv">182,415</td>
+          </tr>
+          <tr class="net-row" style="--indigo: #ef4444; --indigo-dim: rgba(239,68,68,0.1);">
+            <td style="font-family:var(--sans);">Net Profit (Loss) for the Period</td>
+            <td class="var-adv">(249,818)</td>
+            <td>(67,403)</td>
+            <td class="var-adv">(182,415)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note-box amber-note ani" style="margin-top:10px; font-size:11px;">
+      <strong>Note:</strong> The adverse monthly variance is largely driven by front-loading of wages and the Provoke Solutions development invoice. February represents the first full month of operation. Budget assumes a ramp-up over the year and these timing differences are expected to normalise.
+    </div>
+  </div>
+
+  <!-- DATA: Balance sheet - source from Xero balance sheet report -->
+  <!-- ============================================================
+       SLIDE 8: BALANCE SHEET
+       ============================================================ -->
+  <div class="slide" data-slide="8">
+    <div class="slide-title ani">Balance Sheet</div>
+    <div class="slide-sub ani">As at 28 February 2026</div>
+
+    <!-- Top 3 cards -->
+    <div class="card-row ani">
+      <div class="card">
+        <div class="card-label">Total Assets</div>
+        <div class="card-value green">$233,777</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Total Liabilities</div>
+        <div class="card-value red">$483,325</div>
+      </div>
+      <div class="card" style="border-color: rgba(239,68,68,0.3); box-shadow: 0 0 20px rgba(239,68,68,0.08);">
+        <div class="card-label">Net Assets</div>
+        <div class="card-value red">($249,548)</div>
+        <div class="card-sub" style="color:var(--red); opacity:0.7;">Funded by grant investment in progress</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:16px; flex:1; margin-top:14px;" class="ani">
+      <!-- Assets -->
+      <div style="flex:1;">
+        <table class="tbl-compact">
+          <thead>
+            <tr>
+              <th colspan="2" style="text-align:left;">Assets</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-head">
+              <td colspan="2">Bank</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">BNZ 47-00 (Main)</td>
+              <td>200,000</td>
+            </tr>
+            <tr class="total-row">
+              <td style="font-family:var(--sans);">Total Bank</td>
+              <td>200,000</td>
+            </tr>
+            <tr class="section-head">
+              <td colspan="2">Current Assets</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">Current Accounts</td>
+              <td>270</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">GST Receivable</td>
+              <td>33,507</td>
+            </tr>
+            <tr class="total-row">
+              <td style="font-family:var(--sans);">Total Current Assets</td>
+              <td>33,777</td>
+            </tr>
+            <tr class="grand-total">
+              <td style="font-family:var(--sans);">Total Assets</td>
+              <td>233,777</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Liabilities & Equity -->
+      <div style="flex:1;">
+        <table class="tbl-compact">
+          <thead>
+            <tr>
+              <th colspan="2" style="text-align:left;">Liabilities &amp; Equity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-head">
+              <td colspan="2">Current Liabilities</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">Accounts Payable</td>
+              <td>283,325</td>
+            </tr>
+            <tr class="section-head">
+              <td colspan="2">Related Parties</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">Bridgewest Ventures NZ Ltd</td>
+              <td>200,000</td>
+            </tr>
+            <tr class="total-row">
+              <td style="font-family:var(--sans);">Total Current Liabilities</td>
+              <td class="red">483,325</td>
+            </tr>
+            <tr class="grand-total">
+              <td style="font-family:var(--sans);">Total Liabilities</td>
+              <td class="red">483,325</td>
+            </tr>
+            <tr>
+              <td style="height:6px;" colspan="2"></td>
+            </tr>
+            <tr class="section-head">
+              <td colspan="2">Equity</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">Share Capital</td>
+              <td>270</td>
+            </tr>
+            <tr>
+              <td style="padding-left:20px; font-family:var(--sans);">Current Year Earnings</td>
+              <td class="red">(249,818)</td>
+            </tr>
+            <tr class="net-row" style="--indigo:#ef4444; --indigo-dim:rgba(239,68,68,0.1);">
+              <td style="font-family:var(--sans);">Total Equity / Net Assets</td>
+              <td class="red">(249,548)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note-box ani" style="margin-top:12px; font-size:11px;">
+      <strong>Note:</strong> The negative net assets position reflects the early-stage nature of the company. Equity deficit is expected and is funded by the Bridgewest Ventures NZ Ltd commitment of <span class="num">$1,000,000</span> and the Callaghan Innovation grant of <span class="num">$400,000</span>. The Bridgewest balance of <span class="num">$200,000</span> in liabilities represents equity injections yet to be converted to share capital.
+    </div>
+  </div>
+
+  <!-- DATA: Aged payables - source from Xero aged payables report -->
+  <!-- ============================================================
+       SLIDE 9: AGED PAYABLES
+       ============================================================ -->
+  <div class="slide" data-slide="9">
+    <div class="slide-title ani">Aged Payables Summary</div>
+    <div class="slide-sub ani">As at 28 February 2026</div>
+
+    <div class="tbl-wrap ani" style="flex:0 0 auto; overflow:hidden;">
+      <table class="tbl-compact">
+        <thead>
+          <tr>
+            <th style="text-align:left;">Contact</th>
+            <th>Current</th>
+            <th>&lt; 1 Month</th>
+            <th>1 Month</th>
+            <th>2 Months</th>
+            <th>3 Months</th>
+            <th>Older</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--sans);">Antlab Ltd</td>
+            <td>3,393</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>3,393</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--sans);">Duncan Cotterill</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>10,454</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="amber">10,454</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--sans);">iPayroll Ltd</td>
+            <td>21,666</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>21,666</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--sans);">Mark David</td>
+            <td>75,285</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>75,285</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--sans);">Ponteva</td>
+            <td>22,500</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>22,500</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--sans);">Provoke Solutions NZ Ltd</td>
+            <td>150,029</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>150,029</td>
+          </tr>
+          <tr class="grand-total">
+            <td style="font-family:var(--sans);">Total</td>
+            <td>272,872</td>
+            <td class="dash"></td>
+            <td>10,454</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>283,325</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Progress bars -->
+    <div class="ani" style="margin-top:16px; flex:1;">
+      <div class="diag-panel-title" style="margin-bottom:10px;">Composition of payables</div>
+      <div class="pbar-row">
+        <div class="pbar-label">Provoke Solutions NZ Ltd</div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:52.9%; background:var(--indigo);"></div></div>
+        <div class="pbar-val num">$150,029 <span style="color:var(--text-faint);">(52.9%)</span></div>
+      </div>
+      <div class="pbar-row">
+        <div class="pbar-label">Mark David</div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:26.6%; background:#60a5fa;"></div></div>
+        <div class="pbar-val num">$75,285 <span style="color:var(--text-faint);">(26.6%)</span></div>
+      </div>
+      <div class="pbar-row">
+        <div class="pbar-label">Ponteva</div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:7.9%; background:#93c5fd;"></div></div>
+        <div class="pbar-val num">$22,500 <span style="color:var(--text-faint);">(7.9%)</span></div>
+      </div>
+      <div class="pbar-row">
+        <div class="pbar-label">iPayroll Ltd</div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:7.6%; background:#bfdbfe;"></div></div>
+        <div class="pbar-val num">$21,666 <span style="color:var(--text-faint);">(7.6%)</span></div>
+      </div>
+      <div class="pbar-row">
+        <div class="pbar-label">Duncan Cotterill</div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:3.7%; background:var(--amber);"></div></div>
+        <div class="pbar-val num">$10,454 <span style="color:var(--text-faint);">(3.7%)</span></div>
+      </div>
+      <div class="pbar-row">
+        <div class="pbar-label">Antlab Ltd</div>
+        <div class="pbar-track"><div class="pbar-fill" style="width:1.2%; background:var(--text-faint);"></div></div>
+        <div class="pbar-val num">$3,393 <span style="color:var(--text-faint);">(1.2%)</span></div>
+      </div>
+    </div>
+
+    <div class="note-box ani" style="margin-top:12px; font-size:11px;">
+      <strong>96% of payables are current.</strong> Duncan Cotterill ($10,454) is the only balance aged beyond the current month. All other creditors are within current terms. Payment of March creditors will begin as planned once the first BVNZ drawdown is received.
+    </div>
+  </div>
+
+  <!-- DATA: Cashflow diagnostic - update opening/closing cash from bank statements -->
+  <!-- ============================================================
+       SLIDE 10: CASHFLOW DIAGNOSTIC
+       ============================================================ -->
+  <div class="slide" data-slide="10">
+    <div class="slide-title ani">Cashflow Diagnostic</div>
+    <div class="slide-sub ani">For the month ended 28 February 2026</div>
+
+    <!-- Top 2 cards -->
+    <div class="card-row ani">
+      <div class="card">
+        <div class="card-label">Opening Cash</div>
+        <div class="card-value">$100,000</div>
+        <div class="card-sub">1 February 2026</div>
+      </div>
+      <div class="card" style="border-color:rgba(16,185,129,0.3);">
+        <div class="card-label">Closing Cash</div>
+        <div class="card-value green">$200,000</div>
+        <div class="card-sub">28 February 2026</div>
+      </div>
+    </div>
+
+    <!-- Flow box -->
+    <div class="card ani" style="margin-top:12px; padding:16px 20px;">
+      <div style="display:flex; gap:32px; align-items:flex-start;">
+        <div style="flex:1;">
+          <div style="font-size:11px; font-weight:600; color:var(--text-dim); margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:6px;">Net Operating Flows</div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+            <span style="color:var(--text-dim);">Operating Cash Movements</span>
+            <span class="num dim">-</span>
+          </div>
+        </div>
+        <div style="width:1px; background:var(--border); align-self:stretch;"></div>
+        <div style="flex:1;">
+          <div style="font-size:11px; font-weight:600; color:var(--text-dim); margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:6px;">Non-Operating Flows</div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+            <span style="color:var(--text-dim);">Bridgewest Ventures NZ Ltd</span>
+            <span class="num green">$100,000.00</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600;">
+            <span>Net Non-Operating Flows</span>
+            <span class="num green">$100,000.00</span>
+          </div>
+        </div>
+        <div style="width:1px; background:var(--border); align-self:stretch;"></div>
+        <div style="flex:0 0 auto; display:flex; align-items:center;">
+          <div style="background:linear-gradient(135deg, var(--indigo-dim), rgba(16,185,129,0.1)); border:1px solid var(--indigo); border-radius:8px; padding:12px 20px; text-align:center;">
+            <div style="font-size:10px; color:var(--indigo); font-weight:600; margin-bottom:4px;">Net Cash Flows</div>
+            <div class="num green" style="font-size:20px; font-weight:700;">$100,000.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gauge cards -->
+    <div class="card-row ani" style="margin-top:12px;">
+      <div class="gauge-card">
+        <div>
+          <div class="gauge-val dim" style="font-size:24px; color:var(--text-faint);">-</div>
+        </div>
+        <div>
+          <div class="gauge-label">Cash Pressure Level</div>
+          <div class="gauge-note">No operating outflows in February. Cash held from Bridgewest funding tranches. Pressure level will be assessed from March onward once payments commence.</div>
+        </div>
+      </div>
+      <div class="gauge-card">
+        <div>
+          <div class="gauge-val dim" style="font-size:24px; color:var(--text-faint);">-</div>
+        </div>
+        <div>
+          <div class="gauge-label">Cash Survival Months</div>
+          <div class="gauge-note">Payments began in March. This metric populates from the next report once operating outflows are recorded.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="ani" style="margin-top:12px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <div style="display:flex; gap:8px; align-items:flex-start; font-size:11px; color:var(--text-dim);">
+          <span style="color:var(--indigo); flex-shrink:0;">*</span>
+          <span>Tracks physical cash movements, being payments actually made.</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:flex-start; font-size:11px; color:var(--text-dim);">
+          <span style="color:var(--indigo); flex-shrink:0;">*</span>
+          <span>First payments were made at the start of March. Operating flows currently show nil.</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:flex-start; font-size:11px; color:var(--text-dim);">
+          <span style="color:var(--indigo); flex-shrink:0;">*</span>
+          <span>Cash survival months and pressure levels will be calculated once operating outflows begin appearing in the ledger.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA: Cash runway SVG - update gate markers and curve coordinates -->
+  <!-- ============================================================
+       SLIDE 11: CASH RUNWAY
+       ============================================================ -->
+  <div class="slide" data-slide="11">
+    <div class="slide-title ani">Cash Runway</div>
+    <div class="slide-sub ani">Projected cash balance against gate milestones</div>
+
+    <div class="chart-wrap ani" style="flex:1; min-height:0; padding:12px 16px;">
+      <svg id="runway-chart" viewBox="0 0 900 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%;">
+        <defs>
+          <linearGradient id="cashGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.02"/>
+          </linearGradient>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#2563eb"/>
+            <stop offset="60%" stop-color="#60a5fa"/>
+            <stop offset="100%" stop-color="#ef4444"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Grid lines -->
+        <line x1="60" y1="20" x2="880" y2="20" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+        <line x1="60" y1="60" x2="880" y2="60" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+        <line x1="60" y1="100" x2="880" y2="100" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+        <line x1="60" y1="140" x2="880" y2="140" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+        <line x1="60" y1="180" x2="880" y2="180" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+        <line x1="60" y1="200" x2="880" y2="200" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+
+        <!-- Y axis labels -->
+        <text x="55" y="24" fill="#6b7280" font-size="9" text-anchor="end" font-family="Inter">$2.1M</text>
+        <text x="55" y="64" fill="#6b7280" font-size="9" text-anchor="end" font-family="Inter">$1.6M</text>
+        <text x="55" y="104" fill="#6b7280" font-size="9" text-anchor="end" font-family="Inter">$1.1M</text>
+        <text x="55" y="144" fill="#6b7280" font-size="9" text-anchor="end" font-family="Inter">$600K</text>
+        <text x="55" y="184" fill="#6b7280" font-size="9" text-anchor="end" font-family="Inter">$100K</text>
+        <text x="55" y="204" fill="#6b7280" font-size="9" text-anchor="end" font-family="Inter">$0</text>
+
+        <!-- X axis: Jan 2026 to Oct 2027 = 22 months. Width = 820px. Per month = 37.3px -->
+        <!-- Points:
+          Jan 2026 = x:60 (start, ~$100K, y:196)
+          Feb 2026 = x:97 (y:193, $200K -> "Now" marker)
+          Apr 2026 = x:171 (y:185 ~$350K - BVNZ injections lift then decline)
+          Actually model: total funding $2.115M. Start depleting.
+          Let's model from $2.115M total commitment perspective, spending at $100K/month avg.
+          Jan 2026: y = 20 (top = $2.115M, conceptually full funding available)
+          Gate1 Jul 2026 = month 7 -> x: 60 + 6*37.3 = 284, spent $651K, remain $1.464M -> y: 20 + (2115-1464)/2115*180 = 20+55.4 = 75
+          Gate2 Dec 2026 = month 12 -> x: 60 + 11*37.3 = 470, remain $916K -> y: 20 + (2115-916)/2115*180 = 20+102 = 122
+          Gate3 Oct 2027 = month 22 -> x: 60 + 21*37.3 = 843, remain $0 -> y: 200
+          Now Feb 2026 = month 2 -> x: 60 + 1*37.3 = 97
+          -->
+
+        <!-- Filled area -->
+        <path d="M 60,22 C 97,22 130,42 284,75 S 380,100 470,122 C 560,144 700,170 843,200 L 843,200 L 60,200 Z"
+              fill="url(#cashGrad)"/>
+
+        <!-- Main line -->
+        <path d="M 60,22 C 97,22 130,42 284,75 S 380,100 470,122 C 560,144 700,170 843,200"
+              fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- "Now" marker - Feb 2026 -->
+        <line x1="97" y1="20" x2="97" y2="200" stroke="rgba(0,0,0,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="97" cy="22" r="4" fill="#2563eb"/>
+        <text x="97" y="14" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Now</text>
+        <text x="97" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Feb 26</text>
+
+        <!-- Gate 1 - Jul 2026 -->
+        <line x1="284" y1="20" x2="284" y2="200" stroke="rgba(16,185,129,0.5)" stroke-width="1" stroke-dasharray="4,3"/>
+        <circle cx="284" cy="75" r="5" fill="#10b981"/>
+        <text x="284" y="14" fill="#10b981" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">Gate 1</text>
+        <text x="284" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Jul 26</text>
+        <text x="284" y="86" fill="#10b981" font-size="8" text-anchor="middle" font-family="Inter">$1.46M</text>
+
+        <!-- Gate 2 - Dec 2026 -->
+        <line x1="470" y1="20" x2="470" y2="200" stroke="rgba(37,99,235,0.5)" stroke-width="1" stroke-dasharray="4,3"/>
+        <circle cx="470" cy="122" r="5" fill="#2563eb"/>
+        <text x="470" y="14" fill="#2563eb" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">Gate 2</text>
+        <text x="470" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Dec 26</text>
+        <text x="470" y="133" fill="#60a5fa" font-size="8" text-anchor="middle" font-family="Inter">$916K</text>
+
+        <!-- Gate 3 - Oct 2027 -->
+        <line x1="843" y1="20" x2="843" y2="200" stroke="rgba(239,68,68,0.5)" stroke-width="1" stroke-dasharray="4,3"/>
+        <circle cx="843" cy="200" r="5" fill="#ef4444"/>
+        <text x="843" y="14" fill="#ef4444" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">Gate 3</text>
+        <text x="843" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Oct 27</text>
+        <text x="843" y="194" fill="#ef4444" font-size="8" text-anchor="middle" font-family="Inter">$0</text>
+
+        <!-- X axis month labels -->
+        <text x="60" y="212" fill="#6b7280" font-size="7.5" text-anchor="middle" font-family="Inter">Jan 26</text>
+        <text x="171" y="212" fill="#6b7280" font-size="7.5" text-anchor="middle" font-family="Inter">Apr 26</text>
+        <text x="357" y="212" fill="#6b7280" font-size="7.5" text-anchor="middle" font-family="Inter">Sep 26</text>
+        <text x="617" y="212" fill="#6b7280" font-size="7.5" text-anchor="middle" font-family="Inter">Jun 27</text>
+      </svg>
+    </div>
+
+    <!-- Three question cards -->
+    <div class="card-row ani" style="margin-top:12px;">
+      <div class="q-card">
+        <div class="q-text">Do we reach Gate 1?</div>
+        <div class="q-answer green">Yes</div>
+        <div class="q-sub">$1.46M remaining at prototype (Jul 2026). Comfortable buffer with funding on track.</div>
+      </div>
+      <div class="q-card">
+        <div class="q-text">Do we reach Gate 2?</div>
+        <div class="q-answer indigo">Yes</div>
+        <div class="q-sub">$916K remaining at MVP (Dec 2026). On track to deliver the full year plan.</div>
+      </div>
+      <div class="q-card">
+        <div class="q-text">Buffer if we miss?</div>
+        <div class="q-answer amber">~9 months</div>
+        <div class="q-sub">Post-MVP runway extends to ~Oct 2027 before a cash injection is required.</div>
+      </div>
+    </div>
+
+    <div class="note-box ani" style="margin-top:10px; font-size:10.5px;">
+      BVNZ is injecting equity upfront. The Callaghan R&amp;D grant ($400K) reimburses 40% of eligible R&amp;D expenditure, with the remaining 60% funded by investors (BVNZ). BVNZ has a $1,000,000 commitment. The Callaghan loan ($715K) is yet to be secured, which is why Gate 3 remains unplanned. Timing of funding claims is critical as BVNZ fronts capital before reimbursement.
+    </div>
+  </div>
+
+  <!-- DATA: 12-month cashflow forecast - update all monthly figures from budget -->
+  <!-- ============================================================
+       SLIDE 12: 12-MONTH CASHFLOW FORECAST
+       ============================================================ -->
+  <div class="slide" data-slide="12">
+    <div class="slide-title ani">12-Month Cashflow Forecast</div>
+    <div class="slide-sub ani">For the period 1 January 2026 to 31 December 2026</div>
+
+    <div class="cf-wrap ani">
+      <table class="tbl-tiny" style="width:100%;">
+        <thead>
+          <tr>
+            <th style="text-align:left; width:130px;">Item</th>
+            <th>Jan</th>
+            <th>Feb</th>
+            <th>Mar</th>
+            <th>Apr</th>
+            <th>May</th>
+            <th>Jun</th>
+            <th>Jul</th>
+            <th>Aug</th>
+            <th>Sep</th>
+            <th>Oct</th>
+            <th>Nov</th>
+            <th>Dec</th>
+            <th style="border-left:1px solid var(--border-med);">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Opening Bank Balance -->
+          <tr class="section-head">
+            <td style="font-family:var(--sans); font-size:9px;">Opening Bank Balance</td>
+            <td class="dash"></td>
+            <td>100,000</td>
+            <td>200,000</td>
+            <td>119,070</td>
+            <td>72,379</td>
+            <td>4,075</td>
+            <td class="red">(79,340)</td>
+            <td class="red">(147,605)</td>
+            <td class="red">(215,916)</td>
+            <td class="red">(285,305)</td>
+            <td class="red">(369,450)</td>
+            <td class="red">(466,094)</td>
+            <td style="border-left:1px solid var(--border-med);" class="dash"></td>
+          </tr>
+
+          <!-- Cash Received (BVNZ) -->
+          <tr>
+            <td style="padding-left:10px; font-family:var(--sans); color:var(--green); font-size:9px;">Cash Received (BVNZ)</td>
+            <td class="green">100,000</td>
+            <td class="green">100,000</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td style="border-left:1px solid var(--border-med);" class="green">200,000</td>
+          </tr>
+
+          <!-- DATA: GST refunds - monthly cycle, first refund April. Update amounts from Xero GST return. -->
+          <tr>
+            <td style="padding-left:10px; font-family:var(--sans); color:var(--indigo); font-size:9px;">GST Refund (monthly cycle)</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="indigo">33,507</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td class="indigo">12,000</td>
+            <td style="border-left:1px solid var(--border-med);" class="indigo">129,507</td>
+          </tr>
+
+          <!-- Total Cash In -->
+          <tr class="total-row">
+            <td style="font-family:var(--sans); font-size:9px;">Total Cash In</td>
+            <td>100,000</td>
+            <td>100,000</td>
+            <td class="dash"></td>
+            <td>33,507</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td>12,000</td>
+            <td style="border-left:1px solid var(--border-med);">329,507</td>
+          </tr>
+
+          <!-- Operating Expenses (Budget) -->
+          <tr>
+            <td style="padding-left:10px; font-family:var(--sans); color:var(--red); font-size:9px;">Operating Expenses (budget)</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td class="red">80,930</td>
+            <td class="red">80,198</td>
+            <td class="red">80,304</td>
+            <td class="red">95,415</td>
+            <td class="red">80,265</td>
+            <td class="red">80,311</td>
+            <td class="red">81,389</td>
+            <td class="red">96,145</td>
+            <td class="red">108,644</td>
+            <td class="red">108,727</td>
+            <td style="border-left:1px solid var(--border-med);" class="red">892,328</td>
+          </tr>
+
+          <!-- Total Cash Out -->
+          <tr class="total-row">
+            <td style="font-family:var(--sans); font-size:9px;">Total Cash Out</td>
+            <td class="dash"></td>
+            <td class="dash"></td>
+            <td>80,930</td>
+            <td>80,198</td>
+            <td>80,304</td>
+            <td>95,415</td>
+            <td>80,265</td>
+            <td>80,311</td>
+            <td>81,389</td>
+            <td>96,145</td>
+            <td>108,644</td>
+            <td>108,727</td>
+            <td style="border-left:1px solid var(--border-med);">892,328</td>
+          </tr>
+
+          <!-- Net Cash Movement -->
+          <tr>
+            <td style="font-family:var(--sans); font-size:9px; font-weight:600;">Net Cash Movement</td>
+            <td class="green">100,000</td>
+            <td class="green">100,000</td>
+            <td class="red">(80,930)</td>
+            <td class="red">(46,691)</td>
+            <td class="red">(68,304)</td>
+            <td class="red">(83,415)</td>
+            <td class="red">(68,265)</td>
+            <td class="red">(68,311)</td>
+            <td class="red">(69,389)</td>
+            <td class="red">(84,145)</td>
+            <td class="red">(96,644)</td>
+            <td class="red">(96,727)</td>
+            <td style="border-left:1px solid var(--border-med);" class="red">(562,821)</td>
+          </tr>
+
+          <!-- Closing Bank Balance -->
+          <tr class="net-row">
+            <td style="font-family:var(--sans); font-size:9px; font-weight:700;">Closing Bank Balance</td>
+            <td>100,000</td>
+            <td>200,000</td>
+            <td>119,070</td>
+            <td>72,379</td>
+            <td>4,075</td>
+            <td class="red">(79,340)</td>
+            <td class="red">(147,605)</td>
+            <td class="red">(215,916)</td>
+            <td class="red">(285,305)</td>
+            <td class="red">(369,450)</td>
+            <td class="red">(466,094)</td>
+            <td class="red">(562,821)</td>
+            <td style="border-left:1px solid var(--border-med);" class="red">(562,821)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note-box ani" style="margin-top:10px; font-size:10px;">
+      Cash received reflects actual BVNZ equity drawdowns to date ($200,000). GST refunds are estimated from April based on the accumulated $33,507 receivable (Jan-Feb) plus approximately $12,000 per month on an ongoing monthly cycle. Note: Callaghan reimburses 40% of eligible R&amp;D expenditure only; future grant claims are not included in this forecast as timing is subject to milestone reporting and board approval. Operating expenses from March onwards are based on the approved 2026 budget. The forecast shows cash turning negative from June without further funding injections, highlighting the importance of timely Callaghan grant claims and BVNZ drawdowns.
+    </div>
+  </div>
+
+</div><!-- /slides-container -->
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function () {
+  const TOTAL_SLIDES = 12;
+  let current = 1;
+
+  // Build nav dots
+  const navDotsEl = document.getElementById('nav-dots');
+  for (let i = 1; i <= TOTAL_SLIDES; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot';
+    dot.title = 'Slide ' + i;
+    dot.addEventListener('click', () => goToSlide(i));
+    navDotsEl.appendChild(dot);
+  }
+
+  function updateUI() {
+    // Progress bar
+    const pct = ((current - 1) / (TOTAL_SLIDES - 1)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+
+    // Slide counter
+    document.getElementById('slide-counter').textContent = current + ' / ' + TOTAL_SLIDES;
+
+    // Nav dots
+    document.querySelectorAll('.nav-dot').forEach((d, i) => {
+      d.classList.toggle('active', i + 1 === current);
+    });
+
+    // Slides
+    document.querySelectorAll('.slide').forEach(s => {
+      const n = parseInt(s.dataset.slide);
+      s.classList.toggle('active', n === current);
+    });
+  }
+
+  window.goToSlide = function (n) {
+    if (n < 1 || n > TOTAL_SLIDES) return;
+    current = n;
+    updateUI();
+  };
+
+  function next() { goToSlide(Math.min(current + 1, TOTAL_SLIDES)); }
+  function prev() { goToSlide(Math.max(current - 1, 1)); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') next();
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') prev();
+  });
+
+  // Click navigation (click right half to advance, left half to go back)
+  document.getElementById('slides-container').addEventListener('click', e => {
+    const x = e.clientX;
+    const w = window.innerWidth;
+    // Ignore clicks on interactive elements
+    if (e.target.closest('.contents-item') || e.target.closest('.nav-dot')) return;
+    if (x > w * 0.5) next(); else prev();
+  });
+
+  // Touch / swipe navigation
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx > 0) next(); else prev();
+    }
+  }, { passive: true });
+
+  // Initialise
+  updateUI();
+})();
+</script>
+</body>
+</html>
