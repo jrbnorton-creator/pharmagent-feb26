@@ -484,7 +484,7 @@ td.var-adv { color: var(--red); }
    COVER SLIDE (Aceternity-inspired)
    ============================================================ */
 .slide-cover {
-  background: #fafbfc;
+  background: #0a0a0f;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -493,36 +493,47 @@ td.var-adv { color: var(--red); }
 }
 
 .slide-cover::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0);
-  background-size: 40px 40px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 45%, black 20%, transparent 80%);
-  mask-image: radial-gradient(ellipse 70% 50% at 50% 45%, black 20%, transparent 80%);
+  display: none;
 }
 
 .slide-cover::after {
   content: '';
   position: absolute;
-  width: 700px;
-  height: 500px;
-  top: 15%;
+  width: 800px;
+  height: 600px;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, rgba(16,185,129,0.03) 40%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(255,255,255,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#stars-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#shooting-stars-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
   pointer-events: none;
 }
 
 .cover-badge {
   display: inline-block;
-  background: rgba(37,99,235,0.06);
-  border: 1px solid rgba(37,99,235,0.15);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 99px;
   padding: 6px 18px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--indigo);
+  color: rgba(255,255,255,0.7);
   margin-bottom: 32px;
   position: relative;
   z-index: 1;
@@ -531,7 +542,7 @@ td.var-adv { color: var(--red); }
 .cover-title {
   font-size: 56px;
   font-weight: 700;
-  color: var(--text);
+  color: #ffffff;
   line-height: 1.05;
   letter-spacing: -0.03em;
   margin-bottom: 12px;
@@ -542,7 +553,7 @@ td.var-adv { color: var(--red); }
 .cover-sub {
   font-size: 20px;
   font-weight: 300;
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.5);
   letter-spacing: 0.02em;
   margin-bottom: 48px;
   position: relative;
@@ -561,11 +572,11 @@ td.var-adv { color: var(--red); }
 
 .cover-meta-item {
   font-size: 13px;
-  color: var(--text-faint);
+  color: rgba(255,255,255,0.35);
 }
 
 .cover-meta-item span {
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.6);
   font-weight: 500;
 }
 
@@ -575,17 +586,19 @@ td.var-adv { color: var(--red); }
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;
-  color: var(--text-faint);
+  color: rgba(255,255,255,0.3);
   display: flex;
   align-items: center;
   gap: 6px;
   z-index: 1;
 }
 
+.cover-click svg { stroke: rgba(255,255,255,0.3); }
+
 .cover-line {
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, var(--indigo), rgba(37,99,235,0.2));
+  background: linear-gradient(90deg, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
   border-radius: 2px;
   margin-bottom: 40px;
   position: relative;
@@ -849,15 +862,16 @@ td.var-adv { color: var(--red); }
 
   .ani { opacity: 1 !important; transform: none !important; transition: none !important; }
 
-  /* Cover slide */
-  .slide-cover { background: #ffffff !important; }
+  /* Cover slide - dark theme for print */
+  .slide-cover { background: #0a0a0f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .slide-cover::before, .slide-cover::after { display: none !important; }
-  .cover-badge { background: #eff6ff !important; border-color: #bfdbfe !important; color: #1d4ed8 !important; }
-  .cover-title { color: #1a1a2e !important; }
-  .cover-sub { color: #555 !important; }
-  .cover-meta-item { color: #666 !important; }
-  .cover-meta-item span { color: #1a1a2e !important; }
-  .cover-line { background: #2563eb !important; }
+  #stars-canvas, #shooting-stars-svg { display: none !important; }
+  .cover-badge { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.2) !important; color: rgba(255,255,255,0.8) !important; }
+  .cover-title { color: #ffffff !important; }
+  .cover-sub { color: rgba(255,255,255,0.6) !important; }
+  .cover-meta-item { color: rgba(255,255,255,0.5) !important; }
+  .cover-meta-item span { color: rgba(255,255,255,0.9) !important; }
+  .cover-line { background: rgba(255,255,255,0.3) !important; }
 
   /* Typography */
   .slide-title { color: #1a1a2e !important; }
@@ -1091,6 +1105,8 @@ td.var-adv { color: var(--red); }
        SLIDE 1: COVER
        ============================================================ -->
   <div class="slide slide-cover" data-slide="1">
+    <canvas id="stars-canvas"></canvas>
+    <svg id="shooting-stars-svg"></svg>
     <div class="ani">
       <div class="cover-badge">Management Report</div>
     </div>
@@ -2741,6 +2757,151 @@ td.var-adv { color: var(--red); }
 
   // Initialise
   updateUI();
+
+  // ============================================================
+  // SHOOTING STARS + TWINKLING STAR FIELD (Cover slide)
+  // ============================================================
+  (function initStarField() {
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    const svg = document.getElementById('shooting-stars-svg');
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+    let stars = [];
+    const STAR_DENSITY = 0.0003;
+    const MIN_SIZE = 0.4;
+    const MAX_SIZE = 1.8;
+
+    function resizeCanvas() {
+      const slide = canvas.closest('.slide-cover');
+      canvas.width = slide.offsetWidth;
+      canvas.height = slide.offsetHeight;
+      svg.setAttribute('viewBox', '0 0 ' + canvas.width + ' ' + canvas.height);
+      generateStars();
+    }
+
+    function generateStars() {
+      const count = Math.floor(canvas.width * canvas.height * STAR_DENSITY);
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE),
+          twinkleSpeed: 0.3 + Math.random() * 2,
+          twinkleOffset: Math.random() * Math.PI * 2,
+          baseOpacity: 0.3 + Math.random() * 0.7
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const time = Date.now() * 0.001;
+      for (const star of stars) {
+        const twinkle = Math.sin(time / star.twinkleSpeed + star.twinkleOffset);
+        const opacity = star.baseOpacity * (0.5 + 0.5 * twinkle);
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, ' + opacity + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    // Shooting stars via SVG
+    function createShootingStar() {
+      const w = canvas.width || 1200;
+      const h = canvas.height || 800;
+
+      // Random start position (top/right area)
+      const startX = Math.random() * w * 0.7 + w * 0.1;
+      const startY = Math.random() * h * 0.3;
+
+      // Travel direction (down-left to down-right)
+      const angle = 20 + Math.random() * 40; // 20-60 degrees
+      const rad = angle * Math.PI / 180;
+      const length = 80 + Math.random() * 120;
+      const duration = 0.6 + Math.random() * 0.8;
+
+      const endX = startX + Math.cos(rad) * length * 3;
+      const endY = startY + Math.sin(rad) * length * 3;
+
+      // Create gradient
+      const gradId = 'sg' + Date.now() + Math.random().toString(36).substr(2, 4);
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      grad.setAttribute('id', gradId);
+      grad.setAttribute('gradientUnits', 'userSpaceOnUse');
+      grad.setAttribute('x1', '0%');
+      grad.setAttribute('y1', '0%');
+      grad.setAttribute('x2', '100%');
+      grad.setAttribute('y2', '0%');
+
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('stop-color', 'white');
+      stop1.setAttribute('stop-opacity', '0');
+
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('stop-color', 'white');
+      stop2.setAttribute('stop-opacity', '0.9');
+
+      grad.appendChild(stop1);
+      grad.appendChild(stop2);
+      defs.appendChild(grad);
+
+      // Create the shooting star rect
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('width', String(length));
+      rect.setAttribute('height', '1.5');
+      rect.setAttribute('fill', 'url(#' + gradId + ')');
+      rect.setAttribute('rx', '0.75');
+      rect.setAttribute('transform', 'rotate(' + angle + ' ' + startX + ' ' + startY + ')');
+
+      // Group for animation
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.appendChild(defs);
+      g.appendChild(rect);
+      svg.appendChild(g);
+
+      // Animate with CSS
+      rect.style.x = startX + 'px';
+      rect.style.y = startY + 'px';
+      rect.style.opacity = '1';
+      rect.style.transition = 'none';
+
+      requestAnimationFrame(function() {
+        rect.style.transition = 'x ' + duration + 's linear, y ' + duration + 's linear, opacity ' + duration + 's ease-in';
+        rect.style.x = endX + 'px';
+        rect.style.y = endY + 'px';
+        rect.style.opacity = '0';
+      });
+
+      // Remove after animation
+      setTimeout(function() {
+        if (g.parentNode) g.parentNode.removeChild(g);
+      }, duration * 1000 + 100);
+    }
+
+    function scheduleShootingStar() {
+      const delay = 800 + Math.random() * 2500; // 0.8-3.3s between stars
+      setTimeout(function() {
+        createShootingStar();
+        scheduleShootingStar();
+      }, delay);
+    }
+
+    resizeCanvas();
+    drawStars();
+    scheduleShootingStar();
+    // Occasionally spawn a second one close together for realism
+    setTimeout(function() { scheduleShootingStar(); }, 4000);
+
+    window.addEventListener('resize', resizeCanvas);
+  })();
+
 })();
 </script>
 </body>
