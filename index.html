@@ -951,6 +951,123 @@ td.var-adv { color: var(--red); }
   [style*="border-left:4px solid"] { border-left-width: 4px !important; }
   [style*="background:#fef2f2"] { background: #fef2f2 !important; }
 }
+
+/* ============================================================
+   MOBILE / RESPONSIVE
+   ============================================================ */
+/* Ensure all slides scroll when content overflows */
+.slide {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: 24px 20px 32px;
+  }
+
+  .slide-title { font-size: 16px; }
+  .slide-sub { font-size: 11px; }
+
+  /* Stack card rows vertically */
+  .card-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Contents grid single column */
+  .contents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Dashboard KPI strip */
+  .dash-kpi-strip {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dash-kpi-val { font-size: 18px; }
+
+  /* Dashboard: stack all flex rows on mobile */
+  .dash-gate { min-width: 0; }
+  [data-slide="3"] > .ani[style*="display:flex"] {
+    flex-direction: column !important;
+  }
+
+  /* Balance sheet side-by-side tables */
+  [data-slide="8"] > .ani[style*="display:flex"] {
+    flex-direction: column !important;
+  }
+
+  /* Cashflow diagnostic flow box */
+  [data-slide="10"] .card [style*="display:flex"][style*="gap:32px"] {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  /* Slide 12 projection row */
+  [data-slide="12"] .ani[style*="display:flex"] {
+    flex-wrap: wrap !important;
+  }
+
+  /* Tables: allow horizontal scroll */
+  .tbl-wrap, .cf-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table.tbl-compact { font-size: 10px; }
+  table.tbl-compact td { padding: 3px 6px; font-size: 10px; }
+  table.tbl-compact td:first-child { font-size: 10px; }
+  table.tbl-compact th { font-size: 9px; padding: 4px 6px; }
+
+  table.tbl-tiny { font-size: 8px; }
+  table.tbl-tiny td { padding: 2px 4px; font-size: 8px; }
+  table.tbl-tiny th { font-size: 7px; padding: 3px 4px; }
+
+  /* KPI card values */
+  .card-value { font-size: 18px; }
+
+  /* Gauge cards stack */
+  .gauge-card {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gauge-val { font-size: 22px; }
+
+  /* Q cards */
+  .q-answer { font-size: 14px; }
+
+  /* Progress bars */
+  .pbar-label { width: 120px; font-size: 10px; }
+  .pbar-val { font-size: 9px; width: 60px; }
+
+  /* Note boxes */
+  .note-box { font-size: 10px; }
+
+  /* Nav dots - smaller on mobile */
+  #nav-dots { right: 8px; gap: 6px; }
+  .nav-dot { width: 5px; height: 5px; }
+
+  /* Slide counter */
+  #slide-counter { right: 16px; bottom: 12px; font-size: 10px; }
+
+  /* Cover slide */
+  .cover-title { font-size: 28px; }
+  .cover-sub { font-size: 14px; }
+  .cover-meta { gap: 6px; }
+  .cover-meta-item { font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .slide { padding: 16px 14px 28px; }
+  .slide-title { font-size: 14px; }
+  .card-value { font-size: 16px; }
+  .cover-title { font-size: 22px; }
+
+  /* Cashflow forecast needs min width to remain legible */
+  .cf-wrap table { min-width: 700px; }
+}
 </style>
 </head>
 <body>
