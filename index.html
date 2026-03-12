@@ -1009,19 +1009,19 @@ td.var-adv { color: var(--red); }
       </div>
       <div class="contents-item ani" onclick="goToSlide(4)">
         <span class="contents-num">4</span>
-        <span class="contents-name">Year to Date: Profit and Loss</span>
+        <span class="contents-name">P&amp;L Year to Date</span>
       </div>
       <div class="contents-item ani" onclick="goToSlide(5)">
         <span class="contents-num">5</span>
-        <span class="contents-name">Year to Date: Budget Variance</span>
+        <span class="contents-name">Budget Variance Year to Date</span>
       </div>
       <div class="contents-item ani" onclick="goToSlide(6)">
         <span class="contents-num">6</span>
-        <span class="contents-name">Monthly: Profit and Loss</span>
+        <span class="contents-name">P&amp;L by Current Month</span>
       </div>
       <div class="contents-item ani" onclick="goToSlide(7)">
         <span class="contents-num">7</span>
-        <span class="contents-name">Monthly: Budget Variance</span>
+        <span class="contents-name">Budget Variance by Current Month</span>
       </div>
       <div class="contents-item ani" onclick="goToSlide(8)">
         <span class="contents-num">8</span>
@@ -1236,21 +1236,21 @@ td.var-adv { color: var(--red); }
         <div class="dash-panel-title">3-Month Projected Balance</div>
         <div style="display:flex; gap:10px; margin-bottom:14px;">
           <!-- DATA: These are derived from the 12-month cashflow forecast. Update monthly. -->
-          <div class="dash-balance" style="background:rgba(16,185,129,0.06);">
-            <div class="dash-balance-month">Mar 2026</div>
-            <div class="dash-balance-val" style="color:var(--green);">$119,070</div>
-          </div>
           <div class="dash-balance" style="background:rgba(245,158,11,0.06);">
+            <div class="dash-balance-month">Mar 2026</div>
+            <div class="dash-balance-val" style="color:var(--amber);">$23,000</div>
+          </div>
+          <div class="dash-balance" style="background:rgba(239,68,68,0.06);">
             <div class="dash-balance-month">Apr 2026</div>
-            <div class="dash-balance-val" style="color:var(--amber);">$38,872</div>
+            <div class="dash-balance-val" style="color:var(--red);">($23,691)</div>
           </div>
           <div class="dash-balance" style="background:rgba(239,68,68,0.06);">
             <div class="dash-balance-month">May 2026</div>
-            <div class="dash-balance-val" style="color:var(--red);">($41,432)</div>
+            <div class="dash-balance-val" style="color:var(--red);">($91,995)</div>
           </div>
         </div>
         <div style="padding:10px 14px; background:rgba(239,68,68,0.04); border:1px solid rgba(239,68,68,0.12); border-radius:8px; margin-bottom:16px;">
-          <div style="font-size:11px; color:var(--red); font-weight:500;">Cash turns negative by May without further funding drawdown</div>
+          <div style="font-size:11px; color:var(--red); font-weight:500;">Cash turns negative by April without further BVNZ drawdown</div>
         </div>
         <div style="display:flex; align-items:baseline; gap:8px;">
           <span style="font-family:var(--mono); font-size:28px; font-weight:700; color:var(--amber);">9</span>
@@ -1270,7 +1270,7 @@ td.var-adv { color: var(--red); }
        SLIDE 4: YTD PROFIT AND LOSS
        ============================================================ -->
   <div class="slide" data-slide="4">
-    <div class="slide-title ani">Year to Date: Profit and Loss</div>
+    <div class="slide-title ani">P&amp;L Year to Date</div>
     <div class="slide-sub ani">1 January 2026 to 28 February 2026</div>
     <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
 
@@ -1429,17 +1429,17 @@ td.var-adv { color: var(--red); }
        SLIDE 5: YTD BUDGET VARIANCE
        ============================================================ -->
   <div class="slide" data-slide="5">
-    <div class="slide-title ani">Year to Date: Budget Variance</div>
+    <div class="slide-title ani">Budget Variance Year to Date</div>
     <div class="slide-sub ani">1 January 2026 to 28 February 2026</div>
     <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
 
-    <div class="tbl-wrap ani" style="flex:1; overflow:hidden;">
+    <div class="tbl-wrap ani" style="flex:1; overflow-y:auto;">
       <table class="tbl-compact">
         <thead>
           <tr>
             <th></th>
-            <th>1 Jan - 28 Feb</th>
-            <th>Overall Budget</th>
+            <th>Spent (Jan-Feb)</th>
+            <th>Budget (Jan-Feb)</th>
             <th>Variance</th>
           </tr>
         </thead>
@@ -1456,86 +1456,74 @@ td.var-adv { color: var(--red); }
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Accounting Fees</td>
             <td>2,950</td>
-            <td>11,900</td>
-            <td class="var-fav">(8,950)</td>
+            <td>6,000</td>
+            <td class="var-fav">(3,050)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Bank Fees &amp; Charges</td>
             <td class="dash"></td>
-            <td>1,079</td>
-            <td class="var-fav">(1,079)</td>
+            <td>122</td>
+            <td class="var-fav">(122)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Cloud &amp; Product Infrastructure</td>
             <td>13</td>
-            <td>20,868</td>
-            <td class="var-fav">(20,855)</td>
+            <td>1,000</td>
+            <td class="var-fav">(987)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Computer Expenses</td>
             <td>1,922</td>
-            <td>4,200</td>
-            <td class="var-fav">(2,278)</td>
+            <td class="dash"></td>
+            <td class="var-adv">1,922</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Entertainment</td>
             <td class="dash"></td>
-            <td>4,656</td>
-            <td class="var-fav">(4,656)</td>
+            <td>504</td>
+            <td class="var-fav">(504)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">General Expenses</td>
             <td>243</td>
-            <td>8,065</td>
-            <td class="var-fav">(7,822)</td>
+            <td>1,040</td>
+            <td class="var-fav">(797)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Insurance</td>
             <td class="dash"></td>
-            <td>3,189</td>
-            <td class="var-fav">(3,189)</td>
+            <td>412</td>
+            <td class="var-fav">(412)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Legal Fees</td>
             <td>9,090</td>
-            <td>11,800</td>
-            <td class="var-fav">(2,710)</td>
-          </tr>
-          <tr>
-            <td style="padding-left:20px; font-family:var(--sans);">Product Specialist / QA</td>
             <td class="dash"></td>
-            <td>128,778</td>
-            <td class="var-fav">(128,778)</td>
+            <td class="var-adv">9,090</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">SaaS &amp; Business Software</td>
             <td>211</td>
-            <td>7,800</td>
-            <td class="var-fav">(7,589)</td>
-          </tr>
-          <tr>
-            <td style="padding-left:20px; font-family:var(--sans);">Technical Advisor</td>
-            <td class="dash"></td>
-            <td>54,545</td>
-            <td class="var-fav">(54,545)</td>
+            <td>1,000</td>
+            <td class="var-fav">(789)</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Wages &amp; Salaries</td>
             <td>80,289</td>
-            <td>199,612</td>
-            <td class="var-fav">(119,323)</td>
+            <td>36,668</td>
+            <td class="var-adv">43,621</td>
           </tr>
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Website &amp; Domain</td>
             <td>300</td>
-            <td>465</td>
-            <td class="var-fav">(165)</td>
+            <td>60</td>
+            <td class="var-adv">240</td>
           </tr>
           <tr class="total-row">
             <td style="font-family:var(--sans);">Total General Administration</td>
             <td>95,017</td>
-            <td>456,957</td>
-            <td class="var-fav">(361,940)</td>
+            <td>46,806</td>
+            <td class="var-adv">48,211</td>
           </tr>
           <tr class="section-head">
             <td colspan="4">Product Development</td>
@@ -1543,56 +1531,48 @@ td.var-adv { color: var(--red); }
           <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Provoke Solutions NZ</td>
             <td>150,025</td>
-            <td>660,000</td>
-            <td class="var-fav">(509,975)</td>
+            <td>88,000</td>
+            <td class="var-adv">62,025</td>
           </tr>
           <tr class="total-row">
             <td style="font-family:var(--sans);">Total Product Development</td>
             <td>150,025</td>
-            <td>660,000</td>
-            <td class="var-fav">(509,975)</td>
+            <td>88,000</td>
+            <td class="var-adv">62,025</td>
           </tr>
           <tr class="section-head">
             <td colspan="4">Sales &amp; Marketing</td>
           </tr>
           <tr>
-            <td style="padding-left:20px; font-family:var(--sans);">Advertising &amp; Marketing</td>
-            <td class="dash"></td>
-            <td>6,182</td>
-            <td class="var-fav">(6,182)</td>
-          </tr>
-          <tr>
-            <td style="padding-left:20px; font-family:var(--sans);">Conferences</td>
-            <td class="dash"></td>
-            <td>9,000</td>
-            <td class="var-fav">(9,000)</td>
-          </tr>
-          <tr>
             <td style="padding-left:20px; font-family:var(--sans);">Travel - International</td>
             <td>4,776</td>
-            <td>66,909</td>
-            <td class="var-fav">(62,133)</td>
+            <td class="dash"></td>
+            <td class="var-adv">4,776</td>
           </tr>
           <tr class="total-row">
             <td style="font-family:var(--sans);">Total Sales &amp; Marketing</td>
             <td>4,776</td>
-            <td>82,091</td>
-            <td class="var-fav">(77,315)</td>
+            <td class="dash"></td>
+            <td class="var-adv">4,776</td>
           </tr>
           <tr class="grand-total">
             <td style="font-family:var(--sans);">Total Expenses</td>
             <td>249,818</td>
-            <td>1,199,048</td>
-            <td class="var-fav">(949,230)</td>
+            <td>134,806</td>
+            <td class="var-adv">115,012</td>
           </tr>
-          <tr class="net-row">
+          <tr class="net-row" style="--indigo: #ef4444; --indigo-dim: rgba(239,68,68,0.1);">
             <td style="font-family:var(--sans);">Net Profit (Loss) for the Year</td>
             <td>(249,818)</td>
-            <td>(1,199,048)</td>
-            <td class="var-fav">949,230</td>
+            <td>(134,806)</td>
+            <td class="var-adv">(115,012)</td>
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="note-box amber-note ani" style="margin-top:10px; font-size:11px;">
+      <strong>Note:</strong> Budget figures are the Jan-Feb portion only (monthly budget x 2) for an apples-to-apples comparison. The adverse variance is driven by front-loaded Provoke development costs and wages accruing before the budget ramp-up. Technical Advisor and Product Specialist costs are consolidated under Wages &amp; Salaries.
     </div>
   </div>
 
@@ -1601,7 +1581,7 @@ td.var-adv { color: var(--red); }
        SLIDE 6: MONTHLY P&L
        ============================================================ -->
   <div class="slide" data-slide="6">
-    <div class="slide-title ani">Monthly: Profit and Loss</div>
+    <div class="slide-title ani">P&amp;L by Current Month</div>
     <div class="slide-sub ani">For the month ended 28 February 2026</div>
     <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
 
@@ -1731,7 +1711,7 @@ td.var-adv { color: var(--red); }
        SLIDE 7: MONTHLY BUDGET VARIANCE
        ============================================================ -->
   <div class="slide" data-slide="7">
-    <div class="slide-title ani">Monthly: Budget Variance</div>
+    <div class="slide-title ani">Budget Variance by Current Month</div>
     <div class="slide-sub ani">For the month ended 28 February 2026</div>
     <div class="disclaimer ani">These management reports have been prepared without conducting an audit or review engagement procedures and have been prepared solely for internal purposes.</div>
 
@@ -2315,21 +2295,24 @@ td.var-adv { color: var(--red); }
         <circle cx="284" cy="75" r="5" fill="#10b981"/>
         <text x="284" y="14" fill="#10b981" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">Gate 1</text>
         <text x="284" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Jul 26</text>
-        <text x="284" y="86" fill="#10b981" font-size="8" text-anchor="middle" font-family="Inter">$1.46M</text>
+        <text x="284" y="86" fill="#10b981" font-size="7.5" text-anchor="middle" font-family="Inter">Spend $570K</text>
+        <text x="284" y="96" fill="#a16207" font-size="7.5" text-anchor="middle" font-family="Inter" font-weight="600">BVNZ $342K</text>
 
         <!-- Gate 2 - Dec 2026 -->
         <line x1="470" y1="20" x2="470" y2="200" stroke="rgba(37,99,235,0.5)" stroke-width="1" stroke-dasharray="4,3"/>
         <circle cx="470" cy="122" r="5" fill="#2563eb"/>
         <text x="470" y="14" fill="#2563eb" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">Gate 2</text>
         <text x="470" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Dec 26</text>
-        <text x="470" y="133" fill="#60a5fa" font-size="8" text-anchor="middle" font-family="Inter">$916K</text>
+        <text x="470" y="133" fill="#2563eb" font-size="7.5" text-anchor="middle" font-family="Inter">Spend $960K</text>
+        <text x="470" y="143" fill="#a16207" font-size="7.5" text-anchor="middle" font-family="Inter" font-weight="600">BVNZ $785K</text>
 
         <!-- Gate 3 - Oct 2027 -->
         <line x1="843" y1="20" x2="843" y2="200" stroke="rgba(239,68,68,0.5)" stroke-width="1" stroke-dasharray="4,3"/>
         <circle cx="843" cy="200" r="5" fill="#ef4444"/>
         <text x="843" y="14" fill="#ef4444" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">Gate 3</text>
         <text x="843" y="212" fill="#6b7280" font-size="8" text-anchor="middle" font-family="Inter">Oct 27</text>
-        <text x="843" y="194" fill="#ef4444" font-size="8" text-anchor="middle" font-family="Inter">$0</text>
+        <text x="843" y="185" fill="#ef4444" font-size="7.5" text-anchor="middle" font-family="Inter">Spend $2.125M</text>
+        <text x="843" y="195" fill="#a16207" font-size="7.5" text-anchor="middle" font-family="Inter" font-weight="600">BVNZ $1M</text>
 
         <!-- X axis month labels -->
         <text x="60" y="212" fill="#6b7280" font-size="7.5" text-anchor="middle" font-family="Inter">Jan 26</text>
@@ -2339,27 +2322,27 @@ td.var-adv { color: var(--red); }
       </svg>
     </div>
 
-    <!-- Three question cards -->
+    <!-- Three question cards - exposure projections -->
     <div class="card-row ani" style="margin-top:12px;">
       <div class="q-card">
-        <div class="q-text">Do we reach Gate 1?</div>
-        <div class="q-answer green">Yes</div>
-        <div class="q-sub">$1.46M remaining at prototype (Jul 2026). Comfortable buffer with funding on track.</div>
+        <div class="q-text">Gate 1 exposure</div>
+        <div class="q-answer green">$342K to BVNZ</div>
+        <div class="q-sub">Total spend $570K. Callaghan + GST recoveries offset exposure. If stopped here, existing claims could still be lodged.</div>
       </div>
       <div class="q-card">
-        <div class="q-text">Do we reach Gate 2?</div>
-        <div class="q-answer indigo">Yes</div>
-        <div class="q-sub">$916K remaining at MVP (Dec 2026). On track to deliver the full year plan.</div>
+        <div class="q-text">Gate 2 exposure</div>
+        <div class="q-answer indigo">$785K to BVNZ</div>
+        <div class="q-sub">Total spend $960K. On budget and on target for financial risk exposure. Not all costs claimable from Callaghan grant.</div>
       </div>
       <div class="q-card">
-        <div class="q-text">Buffer if we miss?</div>
-        <div class="q-answer amber">9 months</div>
-        <div class="q-sub">Post-MVP runway extends to Oct 2027 before a cash injection is required.</div>
+        <div class="q-text">Gate 3 exposure</div>
+        <div class="q-answer amber">$1M to BVNZ</div>
+        <div class="q-sub">Total spend $2.125M. Maximum exposure capped at $1M. Slightly above due to non-claimable costs.</div>
       </div>
     </div>
 
     <div class="note-box ani" style="margin-top:10px; font-size:10.5px;">
-      BVNZ is injecting equity upfront. The Callaghan R&amp;D grant ($400K) reimburses 40% of eligible R&amp;D expenditure, with the remaining 60% funded by investors (BVNZ). BVNZ has a $1,000,000 commitment. The Callaghan loan ($715K) is yet to be secured, which is why Gate 3 remains unplanned. Timing of funding claims is critical as BVNZ fronts capital before reimbursement.
+      <strong>Purpose of gates: limit financial exposure.</strong> BVNZ is injecting equity upfront. Callaghan R&amp;D grant ($400K) reimburses 40% of eligible R&amp;D expenditure, with the remaining 60% funded by BVNZ ($1M commitment). Exposure will be slightly above budget as not all costs can be claimed from the Callaghan grant. If the project were stopped at any gate, existing moneys for GST and Callaghan could still be claimed back, reducing net exposure. The Callaghan loan ($715K) is yet to be secured, which is why Gate 3 remains unplanned.
     </div>
   </div>
 
@@ -2398,15 +2381,15 @@ td.var-adv { color: var(--red); }
             <td class="dash"></td>
             <td>100,000</td>
             <td>200,000</td>
-            <td>119,070</td>
-            <td>72,379</td>
-            <td>4,075</td>
-            <td class="red">(79,340)</td>
-            <td class="red">(147,605)</td>
-            <td class="red">(215,916)</td>
-            <td class="red">(285,305)</td>
-            <td class="red">(369,450)</td>
-            <td class="red">(466,094)</td>
+            <td>23,000</td>
+            <td class="red">(23,691)</td>
+            <td class="red">(91,995)</td>
+            <td class="red">(175,410)</td>
+            <td class="red">(243,675)</td>
+            <td class="red">(311,986)</td>
+            <td class="red">(381,375)</td>
+            <td class="red">(465,520)</td>
+            <td class="red">(562,164)</td>
             <td style="border-left:1px solid var(--border-med);" class="dash"></td>
           </tr>
 
@@ -2428,7 +2411,7 @@ td.var-adv { color: var(--red); }
             <td style="border-left:1px solid var(--border-med);" class="green">200,000</td>
           </tr>
 
-          <!-- DATA: GST refunds - monthly cycle, first refund April. Update amounts from Xero GST return. -->
+          <!-- GST refunds -->
           <tr>
             <td style="padding-left:10px; font-family:var(--sans); color:var(--indigo); font-size:9px;">GST Refund (monthly cycle)</td>
             <td class="dash"></td>
@@ -2464,12 +2447,12 @@ td.var-adv { color: var(--red); }
             <td style="border-left:1px solid var(--border-med);">329,507</td>
           </tr>
 
-          <!-- Operating Expenses (Budget) -->
+          <!-- Operating Expenses -->
           <tr>
-            <td style="padding-left:10px; font-family:var(--sans); color:var(--red); font-size:9px;">Operating Expenses (budget)</td>
+            <td style="padding-left:10px; font-family:var(--sans); color:var(--red); font-size:9px;">Operating Expenses (actual + budget)</td>
             <td class="dash"></td>
             <td class="dash"></td>
-            <td class="red">80,930</td>
+            <td class="red">177,000</td>
             <td class="red">80,198</td>
             <td class="red">80,304</td>
             <td class="red">95,415</td>
@@ -2479,7 +2462,7 @@ td.var-adv { color: var(--red); }
             <td class="red">96,145</td>
             <td class="red">108,644</td>
             <td class="red">108,727</td>
-            <td style="border-left:1px solid var(--border-med);" class="red">892,328</td>
+            <td style="border-left:1px solid var(--border-med);" class="red">988,398</td>
           </tr>
 
           <!-- Total Cash Out -->
@@ -2487,7 +2470,7 @@ td.var-adv { color: var(--red); }
             <td style="font-family:var(--sans); font-size:9px;">Total Cash Out</td>
             <td class="dash"></td>
             <td class="dash"></td>
-            <td>80,930</td>
+            <td>177,000</td>
             <td>80,198</td>
             <td>80,304</td>
             <td>95,415</td>
@@ -2497,7 +2480,7 @@ td.var-adv { color: var(--red); }
             <td>96,145</td>
             <td>108,644</td>
             <td>108,727</td>
-            <td style="border-left:1px solid var(--border-med);">892,328</td>
+            <td style="border-left:1px solid var(--border-med);">988,398</td>
           </tr>
 
           <!-- Net Cash Movement -->
@@ -2505,7 +2488,7 @@ td.var-adv { color: var(--red); }
             <td style="font-family:var(--sans); font-size:9px; font-weight:600;">Net Cash Movement</td>
             <td class="green">100,000</td>
             <td class="green">100,000</td>
-            <td class="red">(80,930)</td>
+            <td class="red">(177,000)</td>
             <td class="red">(46,691)</td>
             <td class="red">(68,304)</td>
             <td class="red">(83,415)</td>
@@ -2515,7 +2498,7 @@ td.var-adv { color: var(--red); }
             <td class="red">(84,145)</td>
             <td class="red">(96,644)</td>
             <td class="red">(96,727)</td>
-            <td style="border-left:1px solid var(--border-med);" class="red">(562,821)</td>
+            <td style="border-left:1px solid var(--border-med);" class="red">(658,891)</td>
           </tr>
 
           <!-- Closing Bank Balance -->
@@ -2523,24 +2506,39 @@ td.var-adv { color: var(--red); }
             <td style="font-family:var(--sans); font-size:9px; font-weight:700;">Closing Bank Balance</td>
             <td>100,000</td>
             <td>200,000</td>
-            <td>119,070</td>
-            <td>72,379</td>
-            <td>4,075</td>
-            <td class="red">(79,340)</td>
-            <td class="red">(147,605)</td>
-            <td class="red">(215,916)</td>
-            <td class="red">(285,305)</td>
-            <td class="red">(369,450)</td>
-            <td class="red">(466,094)</td>
-            <td class="red">(562,821)</td>
-            <td style="border-left:1px solid var(--border-med);" class="red">(562,821)</td>
+            <td>23,000</td>
+            <td class="red">(23,691)</td>
+            <td class="red">(91,995)</td>
+            <td class="red">(175,410)</td>
+            <td class="red">(243,675)</td>
+            <td class="red">(311,986)</td>
+            <td class="red">(381,375)</td>
+            <td class="red">(465,520)</td>
+            <td class="red">(562,164)</td>
+            <td class="red">(658,891)</td>
+            <td style="border-left:1px solid var(--border-med);" class="red">(658,891)</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="note-box ani" style="margin-top:10px; font-size:10px;">
-      Cash received reflects actual BVNZ equity drawdowns to date ($200,000). GST refunds are estimated from April based on the accumulated $33,507 receivable (Jan-Feb) plus approximately $12,000 per month on an ongoing monthly cycle. Note: Callaghan reimburses 40% of eligible R&amp;D expenditure only; future grant claims are not included in this forecast as timing is subject to milestone reporting and board approval. Operating expenses from March onwards are based on the approved 2026 budget. The forecast shows cash turning negative from June without further funding injections, highlighting the importance of timely Callaghan grant claims and BVNZ drawdowns.
+    <!-- 3-Month Projected Balance -->
+    <div class="ani" style="display:flex; gap:12px; margin-top:10px;">
+      <div style="flex:1; background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.15); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="font-size:9px; color:var(--text-faint); margin-bottom:4px;">Mar 2026</div>
+        <div class="num" style="font-size:16px; font-weight:700; color:var(--amber);">$23,000</div>
+      </div>
+      <div style="flex:1; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="font-size:9px; color:var(--text-faint); margin-bottom:4px;">Apr 2026</div>
+        <div class="num" style="font-size:16px; font-weight:700; color:var(--red);">($23,691)</div>
+      </div>
+      <div style="flex:1; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); border-radius:8px; padding:10px 14px; text-align:center;">
+        <div style="font-size:9px; color:var(--text-faint); margin-bottom:4px;">May 2026</div>
+        <div class="num" style="font-size:16px; font-weight:700; color:var(--red);">($91,995)</div>
+      </div>
+      <div style="flex:2; background:var(--red-dim); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:10px 14px; display:flex; align-items:center;">
+        <div style="font-size:10px; color:var(--red); font-weight:500;">Cash injection required. Account turns negative by April without a further BVNZ drawdown. March expenses of $177K include payment of aged payables ($283K outstanding).</div>
+      </div>
     </div>
   </div>
 
