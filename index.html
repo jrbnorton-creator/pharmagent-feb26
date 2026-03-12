@@ -848,22 +848,36 @@ td.var-adv { color: var(--red); }
     position: static !important;
   }
 
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
   .slide {
     position: relative !important;
     opacity: 1 !important;
     pointer-events: all !important;
-    height: auto !important;
-    min-height: 95vh !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 210mm !important;
+    max-height: 210mm !important;
+    overflow: hidden !important;
     page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    break-inside: avoid !important;
     background: #ffffff !important;
     color: #1a1a2e !important;
-    padding: 40px 48px !important;
+    padding: 28px 36px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .ani { opacity: 1 !important; transform: none !important; transition: none !important; }
 
   /* Cover slide - dark theme for print */
-  .slide-cover { background: #0a0a0f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide-cover { background: #0a0a0f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; justify-content: center !important; align-items: center !important; text-align: center !important; }
   .slide-cover::before, .slide-cover::after { display: none !important; }
   #stars-canvas, #shooting-stars-svg { display: none !important; }
   .cover-badge { background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.2) !important; color: rgba(255,255,255,0.8) !important; }
@@ -964,6 +978,25 @@ td.var-adv { color: var(--red); }
   /* New diagnostic components */
   [style*="border-left:4px solid"] { border-left-width: 4px !important; }
   [style*="background:#fef2f2"] { background: #fef2f2 !important; }
+
+  /* Scale content to fit A4 landscape pages */
+  .slide-title { font-size: 18px !important; margin-bottom: 4px !important; }
+  .slide-sub { font-size: 11px !important; margin-bottom: 12px !important; }
+  .card-row { gap: 8px !important; margin-bottom: 10px !important; }
+  .card { padding: 10px 14px !important; }
+  .card-label { font-size: 9px !important; }
+  .card-value { font-size: 18px !important; }
+  .card-sub { font-size: 8px !important; }
+  table { font-size: 10px !important; }
+  th, td { padding: 4px 8px !important; }
+  .tbl-wrap, .diag-panel, .gauge-card, .q-card, .chart-wrap, .cf-wrap { padding: 10px 14px !important; margin-bottom: 8px !important; }
+  .diag-panel-title { font-size: 10px !important; padding-bottom: 6px !important; margin-bottom: 6px !important; }
+  .section-label { font-size: 9px !important; margin-bottom: 6px !important; }
+  .note-box { padding: 8px 12px !important; font-size: 10px !important; margin-top: 6px !important; }
+  .gauge-label { font-size: 11px !important; }
+  .gauge-val { font-size: 20px !important; }
+  .gauge-note { font-size: 9px !important; }
+  .disclaimer { font-size: 8px !important; }
 }
 
 /* ============================================================
